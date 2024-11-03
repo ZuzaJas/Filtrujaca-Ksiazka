@@ -1,0 +1,9 @@
+# ninja log v6
+8	795	7523377033459936	Ksiazka_autogen/timestamp	380ff39fa2dd1396
+8	795	7523377033459936	Ksiazka_autogen/mocs_compilation.cpp	380ff39fa2dd1396
+8	795	7523377033459936	C:/Users/suzzi/OneDrive/Dokumenty/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/timestamp	380ff39fa2dd1396
+8	795	7523377033459936	C:/Users/suzzi/OneDrive/Dokumenty/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/mocs_compilation.cpp	380ff39fa2dd1396
+802	3707	7523377034486350	CMakeFiles/Ksiazka.dir/Ksiazka_autogen/mocs_compilation.cpp.obj	b832fc8b45355245
+807	3752	7523377034524885	CMakeFiles/Ksiazka.dir/main.cpp.obj	da637cec4aaa2cdd
+812	3837	7523377034589330	CMakeFiles/Ksiazka.dir/mainwindow.cpp.obj	66a94b250ba1e74
+3837	4161	7523377064839038	Ksiazka.exe	81c379d268cecd04
