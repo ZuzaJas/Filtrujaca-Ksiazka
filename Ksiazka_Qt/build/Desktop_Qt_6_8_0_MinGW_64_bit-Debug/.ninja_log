@@ -1,9 +1,0 @@
-# ninja log v6
-9	720	7512332250512164	Ksiazka_Qt_autogen/timestamp	bc93e03b074672c0
-9	720	7512332250512164	Ksiazka_Qt_autogen/mocs_compilation.cpp	bc93e03b074672c0
-9	720	7512332250512164	C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka_Qt/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_Qt_autogen/timestamp	bc93e03b074672c0
-9	720	7512332250512164	C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka_Qt/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_Qt_autogen/mocs_compilation.cpp	bc93e03b074672c0
-725	2803	7512332251233066	CMakeFiles/Ksiazka_Qt.dir/Ksiazka_Qt_autogen/mocs_compilation.cpp.obj	1d7937d385371f8f
-729	2852	7512332251262993	CMakeFiles/Ksiazka_Qt.dir/main.cpp.obj	fdce6a9faab277ec
-732	2859	7512332251302893	CMakeFiles/Ksiazka_Qt.dir/mainwindow.cpp.obj	375f351d71c18ecb
-2859	3092	7512332272571996	Ksiazka_Qt.exe	53e44f89a4ad4f31
