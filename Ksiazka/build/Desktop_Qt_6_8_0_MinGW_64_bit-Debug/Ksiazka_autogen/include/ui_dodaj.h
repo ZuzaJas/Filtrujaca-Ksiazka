@@ -19,16 +19,16 @@ QT_BEGIN_NAMESPACE
 class Ui_Dialog
 {
 public:
-    QPushButton *pushButton;
+    QPushButton *powrot;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName("Dialog");
         Dialog->resize(400, 300);
-        pushButton = new QPushButton(Dialog);
-        pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(140, 140, 80, 24));
+        powrot = new QPushButton(Dialog);
+        powrot->setObjectName("powrot");
+        powrot->setGeometry(QRect(140, 140, 80, 24));
 
         retranslateUi(Dialog);
 
@@ -38,7 +38,7 @@ public:
     void retranslateUi(QDialog *Dialog)
     {
         Dialog->setWindowTitle(QCoreApplication::translate("Dialog", "Dialog", nullptr));
-        pushButton->setText(QCoreApplication::translate("Dialog", "PushButton", nullptr));
+        powrot->setText(QCoreApplication::translate("Dialog", "Powr\303\263t", nullptr));
     } // retranslateUi
 
 };

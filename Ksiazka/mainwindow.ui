@@ -158,7 +158,7 @@
      <string>Tymianek</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="makron">
+   <widget class="QPushButton" name="makaron">
     <property name="geometry">
      <rect>
       <x>520</x>

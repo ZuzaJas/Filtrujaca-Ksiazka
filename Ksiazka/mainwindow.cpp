@@ -8,14 +8,40 @@
 #include <QFile>
 #include <QTextStream>
 
-//zmienne MainWindow
+//zmienne skladniki
+///
+bool wolowe = false;
+bool ryba = false;
+bool jajko = false;
+bool kurczak = false;
+///
+bool makaron = false;
+bool ryz = false;
+bool pieczywo = false;
+///
 bool marchew = false;
-bool cynamon = false;
 bool cebula = false;
+bool ogorek = false;
+bool papryka = false;
+bool pomidor = false;
+bool ziemniak = false;
+///
 bool banan = false;
 bool cytryna = false;
 bool jablko = false;
-bool jajko = false;
+bool malina = false;
+bool pomarancza = false;
+bool truskawka = false;
+///
+bool jogurt = false;
+bool mleko = false;
+bool ser = false;
+bool smietana = false;
+///
+bool cynamon = false;
+bool tymianek = false;
+bool galka_muszkatowa = false;
+bool kminek = false;
 
 // Funkcja do wyświetlania komunikatu w terminalu
 void MainWindow::printMessage(const QString &message)
@@ -33,7 +59,43 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
+    //guziki skladniki
+        ///
+        connect(ui->wolowe, &QPushButton::clicked, this, &MainWindow::wolowe_clicked);
+        connect(ui->ryba, &QPushButton::clicked, this, &MainWindow::ryba_clicked);
+        connect(ui->jajko, &QPushButton::clicked, this, &MainWindow::jajko_clicked);
+        connect(ui->kurczak, &QPushButton::clicked, this, &MainWindow::kurczak_clicked);
+        ///
+        connect(ui->makaron, &QPushButton::clicked, this, &MainWindow::makaron_clicked);
+        connect(ui->ryz, &QPushButton::clicked, this, &MainWindow::ryz_clicked);
+        connect(ui->pieczywo, &QPushButton::clicked, this, &MainWindow::pieczywo_clicked);
+        ///
+        connect(ui->marchew, &QPushButton::clicked, this, &MainWindow::marchew_clicked);
+        connect(ui->cebula, &QPushButton::clicked, this, &MainWindow::cebula_clicked);
+        connect(ui->ogorek, &QPushButton::clicked, this, &MainWindow::ogorek_clicked);
+        connect(ui->papryka, &QPushButton::clicked, this, &MainWindow::papryka_clicked);
+        connect(ui->pomidor, &QPushButton::clicked, this, &MainWindow::pomidor_clicked);
+        connect(ui->ziemniak, &QPushButton::clicked, this, &MainWindow::ziemniak_clicked);
+        ///
+        connect(ui->banan, &QPushButton::clicked, this, &MainWindow::banan_clicked);
+        connect(ui->cytryna, &QPushButton::clicked, this, &MainWindow::cytryna_clicked);
+        connect(ui->jablko, &QPushButton::clicked, this, &MainWindow::jablko_clicked);
+        connect(ui->malina, &QPushButton::clicked, this, &MainWindow::malina_clicked);
+        connect(ui->pomarancza, &QPushButton::clicked, this, &MainWindow::pomarancza_clicked);
+        connect(ui->truskawka, &QPushButton::clicked, this, &MainWindow::truskawka_clicked);
+        ///
+        connect(ui->jogurt, &QPushButton::clicked, this, &MainWindow::jogurt_clicked);
+        connect(ui->mleko, &QPushButton::clicked, this, &MainWindow::mleko_clicked);
+        connect(ui->ser, &QPushButton::clicked, this, &MainWindow::ser_clicked);
+        connect(ui->smietana, &QPushButton::clicked, this, &MainWindow::smietana_clicked);
+        ///
+        connect(ui->cynamon, &QPushButton::clicked, this, &MainWindow::cynamon_clicked);
+        connect(ui->tymianek, &QPushButton::clicked, this, &MainWindow::tymianek_clicked);
+        connect(ui->galka_muszkatowa, &QPushButton::clicked, this, &MainWindow::galka_muszkatowa_clicked);
+        connect(ui->kminek, &QPushButton::clicked, this, &MainWindow::kminek_clicked);
 
+    //nowe okna
+    connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
 
     QPixmap pix("C:\\Users\\48881\\Documents\\Ksiazka\\Filtrujaca-Ksiazka\\Ksiazka\\Lamb_Eat_Good.gif");
     ui->zdjecie->setPixmap(pix);
@@ -68,21 +130,96 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 
 
-void MainWindow::on_nowe_okno_clicked()
+void MainWindow::nowe_okno_clicked()
 {
+    close();
     Dialog okno;
     okno.setModal(true);
     okno.exec();
+
 
 }
 
 //KLIKNIĘCIE GUZIKÓW SKŁADNIKI----------------------------------------------------------------
 
-void MainWindow::on_marchew_clicked()
+void MainWindow::wolowe_clicked()
+{
+    if (wolowe==true){
+        wolowe = false;
+    }else{
+        wolowe = true;
+    }
+    printMessage(QString::number(wolowe));
+}
+
+void MainWindow::ryba_clicked()
+{
+    if (ryba==true){
+        ryba = false;
+    }else{
+        ryba = true;
+    }
+    printMessage(QString::number(ryba));
+}
+
+void MainWindow::jajko_clicked()
+{
+    if (jajko==true){
+        jajko = false;
+    }else{
+        jajko = true;
+    }
+    printMessage(QString::number(jajko));
+}
+
+void MainWindow::kurczak_clicked()
+{
+    if (kurczak==true){
+        kurczak = false;
+    }else{
+        kurczak = true;
+    }
+    printMessage(QString::number(kurczak));
+}
+///////
+
+void MainWindow::makaron_clicked()
+{
+    if (makaron==true){
+        makaron = false;
+    }else{
+        makaron = true;
+    }
+    printMessage(QString::number(makaron));
+}
+
+void MainWindow::ryz_clicked()
+{
+    if (ryz==true){
+        ryz = false;
+    }else{
+        ryz = true;
+    }
+    printMessage(QString::number(ryz));
+}
+
+void MainWindow::pieczywo_clicked()
+{
+    if (pieczywo==true){
+        pieczywo = false;
+    }else{
+        pieczywo = true;
+    }
+    printMessage(QString::number(pieczywo));
+}
+///////
+
+void MainWindow::marchew_clicked()
 {
     if (marchew==true){
         marchew = false;
@@ -92,17 +229,7 @@ void MainWindow::on_marchew_clicked()
     printMessage(QString::number(marchew));
 }
 
-void MainWindow::on_banan_clicked()
-{
-    if (banan==true){
-        banan = false;
-    }else{
-        banan = true;
-    }
-    printMessage(QString::number(banan));
-}
-
-void MainWindow::on_cebula_clicked()
+void MainWindow::cebula_clicked()
 {
     if (cebula==true){
         cebula = false;
@@ -112,17 +239,58 @@ void MainWindow::on_cebula_clicked()
     printMessage(QString::number(cebula));
 }
 
-void MainWindow::on_cynamon_clicked()
+void MainWindow::ogorek_clicked()
 {
-    if (cynamon==true){
-        cynamon = false;
+    if (ogorek==true){
+        ogorek = false;
     }else{
-        cynamon = true;
+        ogorek = true;
     }
-    printMessage(QString::number(cynamon));
+    printMessage(QString::number(ogorek));
 }
 
-void MainWindow::on_cytryna_clicked()
+void MainWindow::papryka_clicked()
+{
+    if (papryka==true){
+        papryka = false;
+    }else{
+        papryka = true;
+    }
+    printMessage(QString::number(papryka));
+}
+
+void MainWindow::pomidor_clicked()
+{
+    if (pomidor==true){
+        pomidor = false;
+    }else{
+        pomidor = true;
+    }
+    printMessage(QString::number(pomidor));
+}
+
+void MainWindow::ziemniak_clicked()
+{
+    if (ziemniak==true){
+        ziemniak = false;
+    }else{
+        ziemniak = true;
+    }
+    printMessage(QString::number(ziemniak));
+}
+///////
+
+void MainWindow::banan_clicked()
+{
+    if (banan==true){
+        banan = false;
+    }else{
+        banan = true;
+    }
+    printMessage(QString::number(banan));
+}
+
+void MainWindow::cytryna_clicked()
 {
     if (cytryna==true){
         cytryna = false;
@@ -132,7 +300,7 @@ void MainWindow::on_cytryna_clicked()
     printMessage(QString::number(cytryna));
 }
 
-void MainWindow::on_jablko_clicked()
+void MainWindow::jablko_clicked()
 {
     if (jablko==true){
         jablko = false;
@@ -142,132 +310,114 @@ void MainWindow::on_jablko_clicked()
     printMessage(QString::number(jablko));
 }
 
-void MainWindow::on_jajko_clicked()
+void MainWindow::malina_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (malina==true){
+        malina = false;
     }else{
-        jajko = true;
+        malina = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(malina));
 }
 
-void MainWindow::on_kurczak_clicked()
+void MainWindow::pomarancza_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (pomarancza==true){
+        pomarancza = false;
     }else{
-        jajko = true;
+        pomarancza = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(pomarancza));
 }
 
-void MainWindow::on_makaron_clicked()
+void MainWindow::truskawka_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (truskawka==true){
+        truskawka = false;
     }else{
-        jajko = true;
+        truskawka = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(truskawka));
+}
+///////
+
+void MainWindow::jogurt_clicked()
+{
+    if (jogurt==true){
+        jogurt = false;
+    }else{
+        jogurt = true;
+    }
+    printMessage(QString::number(jogurt));
 }
 
-void MainWindow::on_malina_clicked()
+void MainWindow::mleko_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (mleko==true){
+        mleko = false;
     }else{
-        jajko = true;
+        mleko = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(mleko));
 }
 
-void MainWindow::on_mleko_clicked()
+void MainWindow::ser_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (ser==true){
+        ser = false;
     }else{
-        jajko = true;
+        ser = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(ser));
 }
 
-void MainWindow::on_ogorek_clicked()
+void MainWindow::smietana_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (smietana==true){
+        smietana = false;
     }else{
-        jajko = true;
+        smietana = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(smietana));
+}
+///////
+
+void MainWindow::cynamon_clicked()
+{
+    if (cynamon==true){
+        cynamon = false;
+    }else{
+        cynamon = true;
+    }
+    printMessage(QString::number(cynamon));
 }
 
-void MainWindow::on_papryka_clicked()
+void MainWindow::tymianek_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (tymianek==true){
+        tymianek = false;
     }else{
-        jajko = true;
+        tymianek = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(tymianek));
 }
 
-void MainWindow::on_jajko_clicked()
+void MainWindow::galka_muszkatowa_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (galka_muszkatowa==true){
+        galka_muszkatowa = false;
     }else{
-        jajko = true;
+        galka_muszkatowa = true;
     }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(galka_muszkatowa));
 }
 
-void MainWindow::on_jajko_clicked()
+void MainWindow::kminek_clicked()
 {
-    if (jajko==true){
-        jajko = false;
+    if (kminek==true){
+        kminek = false;
     }else{
-        jajko = true;
+        kminek = true;
     }
-    printMessage(QString::number(jajko));
-}
-
-void MainWindow::on_jajko_clicked()
-{
-    if (jajko==true){
-        jajko = false;
-    }else{
-        jajko = true;
-    }
-    printMessage(QString::number(jajko));
-}
-
-void MainWindow::on_jajko_clicked()
-{
-    if (jajko==true){
-        jajko = false;
-    }else{
-        jajko = true;
-    }
-    printMessage(QString::number(jajko));
-}
-
-void MainWindow::on_jajko_clicked()
-{
-    if (jajko==true){
-        jajko = false;
-    }else{
-        jajko = true;
-    }
-    printMessage(QString::number(jajko));
-}
-
-void MainWindow::on_jajko_clicked()
-{
-    if (jajko==true){
-        jajko = false;
-    }else{
-        jajko = true;
-    }
-    printMessage(QString::number(jajko));
+    printMessage(QString::number(kminek));
 }

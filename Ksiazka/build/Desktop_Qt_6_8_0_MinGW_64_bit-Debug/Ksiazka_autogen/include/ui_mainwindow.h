@@ -33,7 +33,7 @@ public:
     QPushButton *galka_muszkatowa;
     QPushButton *cynamon;
     QPushButton *tymianek;
-    QPushButton *makron;
+    QPushButton *makaron;
     QPushButton *pieczywo;
     QPushButton *ryz;
     QPushButton *marchew;
@@ -103,9 +103,9 @@ public:
         tymianek = new QPushButton(centralwidget);
         tymianek->setObjectName("tymianek");
         tymianek->setGeometry(QRect(650, 670, 80, 20));
-        makron = new QPushButton(centralwidget);
-        makron->setObjectName("makron");
-        makron->setGeometry(QRect(520, 160, 80, 20));
+        makaron = new QPushButton(centralwidget);
+        makaron->setObjectName("makaron");
+        makaron->setGeometry(QRect(520, 160, 80, 20));
         pieczywo = new QPushButton(centralwidget);
         pieczywo->setObjectName("pieczywo");
         pieczywo->setGeometry(QRect(900, 160, 80, 20));
@@ -192,7 +192,7 @@ public:
         galka_muszkatowa->setText(QCoreApplication::translate("MainWindow", "Ga\305\202ka muszk.", nullptr));
         cynamon->setText(QCoreApplication::translate("MainWindow", "Cynamon", nullptr));
         tymianek->setText(QCoreApplication::translate("MainWindow", "Tymianek", nullptr));
-        makron->setText(QCoreApplication::translate("MainWindow", "Makron", nullptr));
+        makaron->setText(QCoreApplication::translate("MainWindow", "Makron", nullptr));
         pieczywo->setText(QCoreApplication::translate("MainWindow", "Pieczywo", nullptr));
         ryz->setText(QCoreApplication::translate("MainWindow", "Ry\305\274", nullptr));
         marchew->setText(QCoreApplication::translate("MainWindow", "Marchew", nullptr));
