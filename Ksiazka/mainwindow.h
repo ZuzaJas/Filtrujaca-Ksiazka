@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidget>
+#include <QSlider>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +19,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+private slots:
+    void on_nowe_okno_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QListWidget *listWidget;
+    QSlider *slider;
+
 };
 #endif // MAINWINDOW_H
