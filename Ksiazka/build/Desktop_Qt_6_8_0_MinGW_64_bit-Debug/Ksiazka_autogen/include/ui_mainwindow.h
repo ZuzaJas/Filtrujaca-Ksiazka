@@ -165,7 +165,7 @@ public:
         smietana->setGeometry(QRect(770, 520, 80, 20));
         zdjecie = new QLabel(centralwidget);
         zdjecie->setObjectName("zdjecie");
-        zdjecie->setGeometry(QRect(240, 450, 248, 283));
+        zdjecie->setGeometry(QRect(170, 480, 248, 283));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
