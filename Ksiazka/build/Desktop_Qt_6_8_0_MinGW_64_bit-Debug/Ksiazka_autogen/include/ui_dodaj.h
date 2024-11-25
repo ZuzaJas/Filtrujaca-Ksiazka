@@ -20,15 +20,19 @@ class Ui_Dialog
 {
 public:
     QPushButton *powrot;
+    QPushButton *zatwierdz;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName("Dialog");
-        Dialog->resize(400, 300);
+        Dialog->resize(1000, 800);
         powrot = new QPushButton(Dialog);
         powrot->setObjectName("powrot");
-        powrot->setGeometry(QRect(140, 140, 80, 24));
+        powrot->setGeometry(QRect(890, 740, 80, 24));
+        zatwierdz = new QPushButton(Dialog);
+        zatwierdz->setObjectName("zatwierdz");
+        zatwierdz->setGeometry(QRect(800, 740, 80, 24));
 
         retranslateUi(Dialog);
 
@@ -39,6 +43,7 @@ public:
     {
         Dialog->setWindowTitle(QCoreApplication::translate("Dialog", "Dialog", nullptr));
         powrot->setText(QCoreApplication::translate("Dialog", "Powr\303\263t", nullptr));
+        zatwierdz->setText(QCoreApplication::translate("Dialog", "Zatwierd\305\272", nullptr));
     } // retranslateUi
 
 };

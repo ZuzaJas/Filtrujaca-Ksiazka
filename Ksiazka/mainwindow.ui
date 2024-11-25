@@ -20,58 +20,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="kurczak">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>60</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Kurczak</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="wolowe">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>60</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Wołowe</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ryba">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>60</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ryba</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="jajko">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>60</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jajko</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -158,110 +106,6 @@
      <string>Tymianek</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="makaron">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>160</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Makron</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pieczywo">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>160</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pieczywo</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ryz">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>160</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ryż</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="marchew">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>260</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Marchew</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ziemniak">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>290</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ziemniak</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="cebula">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>260</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Cebula</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pomidor">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>290</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pomidor</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="papryka">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>260</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Papryka</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="nowe_okno">
     <property name="geometry">
      <rect>
@@ -275,149 +119,6 @@
      <string>Nowe Okno</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ogorek">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>290</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ogórek</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="truskawka">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>370</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Truskawka</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pomarancza">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>400</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pomarańcza</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="banan">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>370</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Banan</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="cytryna">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>400</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Cytryna</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="jablko">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>370</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jabłko</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="malina">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>400</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Malina</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="mleko">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>520</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Mleko</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="jogurt">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>520</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jogurt</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ser">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>520</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ser</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="smietana">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>520</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Śmietana</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="zdjecie">
     <property name="geometry">
      <rect>
@@ -429,6 +130,19 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>360</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Baza danych</string>
     </property>
    </widget>
   </widget>
