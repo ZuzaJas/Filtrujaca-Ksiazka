@@ -10,38 +10,17 @@
 
 //zmienne skladniki
 ///
-bool wolowe = false;
-bool ryba = false;
-bool jajko = false;
-bool kurczak = false;
-///
-bool makaron = false;
-bool ryz = false;
-bool pieczywo = false;
-///
-bool marchew = false;
-bool cebula = false;
-bool ogorek = false;
-bool papryka = false;
-bool pomidor = false;
-bool ziemniak = false;
-///
-bool banan = false;
-bool cytryna = false;
-bool jablko = false;
-bool malina = false;
-bool pomarancza = false;
-bool truskawka = false;
-///
-bool jogurt = false;
-bool mleko = false;
-bool ser = false;
-bool smietana = false;
-///
-bool cynamon = false;
-bool tymianek = false;
-bool galka_muszkatowa = false;
-bool kminek = false;
+
+QStringList lista_skladniki = {
+    "wolowe","ryba","jajko","kurczak",
+    "makaron", "ryz", "pieczywo",
+    "marchew", "cebula","ogorek", "papryka", "pomidor", "ziemniak",
+    "banan","cytryna","jablko","malina","pomarancza","truskawka",
+    "mleko", "ser","smietana", "jogurt",
+    "cynamon","tymianek","galka_muszkatowa","kminek"
+};
+QList<int> index_skladniki(lista_skladniki.size(), 0);
+
 
 // Funkcja do wyświetlania komunikatu w terminalu
 void MainWindow::printMessage(const QString &message)
@@ -59,40 +38,181 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    //guziki skladniki
-        ///
-        connect(ui->wolowe, &QPushButton::clicked, this, &MainWindow::wolowe_clicked);
-        connect(ui->ryba, &QPushButton::clicked, this, &MainWindow::ryba_clicked);
-        connect(ui->jajko, &QPushButton::clicked, this, &MainWindow::jajko_clicked);
-        connect(ui->kurczak, &QPushButton::clicked, this, &MainWindow::kurczak_clicked);
-        ///
-        connect(ui->makaron, &QPushButton::clicked, this, &MainWindow::makaron_clicked);
-        connect(ui->ryz, &QPushButton::clicked, this, &MainWindow::ryz_clicked);
-        connect(ui->pieczywo, &QPushButton::clicked, this, &MainWindow::pieczywo_clicked);
-        ///
-        connect(ui->marchew, &QPushButton::clicked, this, &MainWindow::marchew_clicked);
-        connect(ui->cebula, &QPushButton::clicked, this, &MainWindow::cebula_clicked);
-        connect(ui->ogorek, &QPushButton::clicked, this, &MainWindow::ogorek_clicked);
-        connect(ui->papryka, &QPushButton::clicked, this, &MainWindow::papryka_clicked);
-        connect(ui->pomidor, &QPushButton::clicked, this, &MainWindow::pomidor_clicked);
-        connect(ui->ziemniak, &QPushButton::clicked, this, &MainWindow::ziemniak_clicked);
-        ///
-        connect(ui->banan, &QPushButton::clicked, this, &MainWindow::banan_clicked);
-        connect(ui->cytryna, &QPushButton::clicked, this, &MainWindow::cytryna_clicked);
-        connect(ui->jablko, &QPushButton::clicked, this, &MainWindow::jablko_clicked);
-        connect(ui->malina, &QPushButton::clicked, this, &MainWindow::malina_clicked);
-        connect(ui->pomarancza, &QPushButton::clicked, this, &MainWindow::pomarancza_clicked);
-        connect(ui->truskawka, &QPushButton::clicked, this, &MainWindow::truskawka_clicked);
-        ///
-        connect(ui->jogurt, &QPushButton::clicked, this, &MainWindow::jogurt_clicked);
-        connect(ui->mleko, &QPushButton::clicked, this, &MainWindow::mleko_clicked);
-        connect(ui->ser, &QPushButton::clicked, this, &MainWindow::ser_clicked);
-        connect(ui->smietana, &QPushButton::clicked, this, &MainWindow::smietana_clicked);
-        ///
-        connect(ui->cynamon, &QPushButton::clicked, this, &MainWindow::cynamon_clicked);
-        connect(ui->tymianek, &QPushButton::clicked, this, &MainWindow::tymianek_clicked);
-        connect(ui->galka_muszkatowa, &QPushButton::clicked, this, &MainWindow::galka_muszkatowa_clicked);
-        connect(ui->kminek, &QPushButton::clicked, this, &MainWindow::kminek_clicked);
+    //SQL
+    QSqlDatabase baza = QSqlDatabase::addDatabase("QSQLITE");
+    baza.setDatabaseName("C:\\test.db");
+    if(baza.open())
+        ui->label_2->setText("[+] POŁĄCZONO ");
+    else
+        ui->label_2->setText("[-] NIE POŁĄCZONO Z BAZĄ DANYCH");
+
+//---------------GUZIKI---------------------------------------------------------------------------------------------------------------------------------
+
+    //wolowe
+    QPushButton *wolowe = new QPushButton("Wołowe", this);
+    wolowe->setGeometry(520, 60, 80, 20);
+    connect(wolowe, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    wolowe->setObjectName("wolowe");
+
+    //ryba
+    QPushButton *ryba = new QPushButton("Ryba", this);
+    ryba->setGeometry(650, 60, 80, 20);
+    connect(ryba, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    ryba->setObjectName("ryba");
+
+    //jajko
+    QPushButton *jajko = new QPushButton("Jajko", this);
+    jajko->setGeometry(770, 60, 80, 20);
+    connect(jajko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    jajko->setObjectName("jajko");
+
+    //kurczak
+    QPushButton *kurczak = new QPushButton("Kurczak", this);
+    kurczak->setGeometry(900, 60, 80, 20);
+    connect(kurczak, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    kurczak->setObjectName("kurczak");
+
+    //makaron
+    QPushButton *makaron = new QPushButton("Makaron", this);
+    makaron->setGeometry(520, 160, 80, 20);
+    connect(makaron, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    makaron->setObjectName("makaron");
+
+    //ryz
+    QPushButton *ryz = new QPushButton("Ryż", this);
+    ryz->setGeometry(710, 160, 80, 20);
+    connect(ryz, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    ryz->setObjectName("ryz");
+
+    //pieczywo
+    QPushButton *pieczywo = new QPushButton("Pieczywo", this);
+    pieczywo->setGeometry(900, 160, 80, 20);
+    connect(pieczywo, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    pieczywo->setObjectName("pieczywo");
+
+    //marchew
+    QPushButton *marchew = new QPushButton("Marchew", this);
+    marchew->setGeometry(520, 260, 80, 20);
+    connect(marchew, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    marchew->setObjectName("marchew");
+
+    //cebula
+    QPushButton *cebula = new QPushButton("Cebula", this);
+    cebula->setGeometry(710, 260, 80, 20);
+    connect(cebula, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    cebula->setObjectName("cebula");
+
+    //ogorek
+    QPushButton *ogorek = new QPushButton("Ogorek", this);
+    ogorek->setGeometry(900, 260, 80, 20);
+    connect(ogorek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    ogorek->setObjectName("ogorek");
+
+    //papryka
+    QPushButton *papryka = new QPushButton("Papryka", this);
+    papryka->setGeometry(520, 290, 80, 20);
+    connect(papryka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    papryka->setObjectName("papryka");
+
+    //pomidor
+    QPushButton *pomidor = new QPushButton("Pomidor", this);
+    pomidor->setGeometry(710, 290, 80, 20);
+    connect(pomidor, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    pomidor->setObjectName("pomidor");
+
+    //ziemniak
+    QPushButton *ziemniak = new QPushButton("Ziemniak", this);
+    ziemniak->setGeometry(900, 290, 80, 20);
+    connect(ziemniak, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    ziemniak->setObjectName("ziemniak");
+
+    //banan
+    QPushButton *banan = new QPushButton("Banan", this);
+    banan->setGeometry(520, 370, 80, 20);
+    connect(banan, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    banan->setObjectName("banan");
+
+    //cytryna
+    QPushButton *cytryna = new QPushButton("Cytryna", this);
+    cytryna->setGeometry(710, 370, 80, 20);
+    connect(cytryna, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    cytryna->setObjectName("cytryna");
+
+    //jablko
+    QPushButton *jablko = new QPushButton("Jablko", this);
+    jablko->setGeometry(900, 370, 80, 20);
+    connect(jablko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    jablko->setObjectName("jablko");
+
+    //malina
+    QPushButton *malina = new QPushButton("Malina", this);
+    malina->setGeometry(520, 400, 80, 20);
+    connect(malina, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    malina->setObjectName("malina");
+
+    //pomarancza
+    QPushButton *pomarancza = new QPushButton("Pomarancza", this);
+    pomarancza->setGeometry(710, 400, 80, 20);
+    connect(pomarancza, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    pomarancza->setObjectName("pomarancza");
+
+    //truskawka
+    QPushButton *truskawka = new QPushButton("Truskawka", this);
+    truskawka->setGeometry(900, 400, 80, 20);
+    connect(truskawka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    truskawka->setObjectName("truskawka");
+
+
+    //mleko
+    QPushButton *mleko = new QPushButton("Mleko", this);
+    mleko->setGeometry(520, 520, 80, 20);
+    connect(mleko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    mleko->setObjectName("mleko");
+
+    //ser
+    QPushButton *ser = new QPushButton("Ser", this);
+    ser->setGeometry(650, 520, 80, 20);
+    connect(ser, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    ser->setObjectName("ser");
+
+    //smietana
+    QPushButton *smietana = new QPushButton("Śmietana", this);
+    smietana->setGeometry(770, 520, 80, 20);
+    connect(smietana, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    smietana->setObjectName("smietana");
+
+    //jogurt
+    QPushButton *jogurt = new QPushButton("Jogurt", this);
+    jogurt->setGeometry(900, 520, 80, 20);
+    connect(jogurt, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    jogurt->setObjectName("jogurt");
+
+    //cynamon
+    QPushButton *cynamon = new QPushButton("Cynamon", this);
+    cynamon->setGeometry(520, 670, 80, 20);
+    connect(cynamon, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    cynamon->setObjectName("cynamon");
+
+    //tymianek
+    QPushButton *tymianek = new QPushButton("Tymianek", this);
+    tymianek->setGeometry(650, 670, 80, 20);
+    connect(tymianek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    tymianek->setObjectName("tymianek");
+
+    //galka_muszkatowa
+    QPushButton *galka_muszkatowa = new QPushButton("Gałka Muszk.", this);
+    galka_muszkatowa->setGeometry(770, 670, 80, 20);
+    connect(galka_muszkatowa, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    galka_muszkatowa->setObjectName("galka_muszkatowa");
+
+    //kminek
+    QPushButton *kminek = new QPushButton("Kminek", this);
+    kminek->setGeometry(900, 670, 80, 20);
+    connect(kminek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    kminek->setObjectName("kminek");
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
     //nowe okna
     connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
@@ -145,279 +265,33 @@ void MainWindow::nowe_okno_clicked()
 
 }
 
-//KLIKNIĘCIE GUZIKÓW SKŁADNIKI----------------------------------------------------------------
 
-void MainWindow::wolowe_clicked()
+void MainWindow::skladnik_clicked()
 {
-    if (wolowe==true){
-        wolowe = false;
-    }else{
-        wolowe = true;
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+    QString wyraz_id = button->objectName();
+    int index = lista_skladniki.indexOf(wyraz_id);
+    if (button) {
+        if (index != -1) {
+            if(index_skladniki[index] == 1)
+            {
+                index_skladniki[index] = 0;
+                button->setStyleSheet("color: black;");
+            }else{
+                index_skladniki[index] = 1;
+                button->setStyleSheet("color: rgb(50, 205, 50);");
+            }
+            qDebug() << "Index List:" << index_skladniki[index];
+
+        } else {
+            qDebug() << "Nie znaleziono";
+        }
+        qDebug() << "Index:" << index;
+
+
     }
-    printMessage(QString::number(wolowe));
 }
 
-void MainWindow::ryba_clicked()
-{
-    if (ryba==true){
-        ryba = false;
-    }else{
-        ryba = true;
-    }
-    printMessage(QString::number(ryba));
-}
 
-void MainWindow::jajko_clicked()
-{
-    if (jajko==true){
-        jajko = false;
-    }else{
-        jajko = true;
-    }
-    printMessage(QString::number(jajko));
-}
 
-void MainWindow::kurczak_clicked()
-{
-    if (kurczak==true){
-        kurczak = false;
-    }else{
-        kurczak = true;
-    }
-    printMessage(QString::number(kurczak));
-}
-///////
 
-void MainWindow::makaron_clicked()
-{
-    if (makaron==true){
-        makaron = false;
-    }else{
-        makaron = true;
-    }
-    printMessage(QString::number(makaron));
-}
-
-void MainWindow::ryz_clicked()
-{
-    if (ryz==true){
-        ryz = false;
-    }else{
-        ryz = true;
-    }
-    printMessage(QString::number(ryz));
-}
-
-void MainWindow::pieczywo_clicked()
-{
-    if (pieczywo==true){
-        pieczywo = false;
-    }else{
-        pieczywo = true;
-    }
-    printMessage(QString::number(pieczywo));
-}
-///////
-
-void MainWindow::marchew_clicked()
-{
-    if (marchew==true){
-        marchew = false;
-    }else{
-         marchew = true;
-    }
-    printMessage(QString::number(marchew));
-}
-
-void MainWindow::cebula_clicked()
-{
-    if (cebula==true){
-        cebula = false;
-    }else{
-        cebula = true;
-    }
-    printMessage(QString::number(cebula));
-}
-
-void MainWindow::ogorek_clicked()
-{
-    if (ogorek==true){
-        ogorek = false;
-    }else{
-        ogorek = true;
-    }
-    printMessage(QString::number(ogorek));
-}
-
-void MainWindow::papryka_clicked()
-{
-    if (papryka==true){
-        papryka = false;
-    }else{
-        papryka = true;
-    }
-    printMessage(QString::number(papryka));
-}
-
-void MainWindow::pomidor_clicked()
-{
-    if (pomidor==true){
-        pomidor = false;
-    }else{
-        pomidor = true;
-    }
-    printMessage(QString::number(pomidor));
-}
-
-void MainWindow::ziemniak_clicked()
-{
-    if (ziemniak==true){
-        ziemniak = false;
-    }else{
-        ziemniak = true;
-    }
-    printMessage(QString::number(ziemniak));
-}
-///////
-
-void MainWindow::banan_clicked()
-{
-    if (banan==true){
-        banan = false;
-    }else{
-        banan = true;
-    }
-    printMessage(QString::number(banan));
-}
-
-void MainWindow::cytryna_clicked()
-{
-    if (cytryna==true){
-        cytryna = false;
-    }else{
-        cytryna = true;
-    }
-    printMessage(QString::number(cytryna));
-}
-
-void MainWindow::jablko_clicked()
-{
-    if (jablko==true){
-        jablko = false;
-    }else{
-        jablko = true;
-    }
-    printMessage(QString::number(jablko));
-}
-
-void MainWindow::malina_clicked()
-{
-    if (malina==true){
-        malina = false;
-    }else{
-        malina = true;
-    }
-    printMessage(QString::number(malina));
-}
-
-void MainWindow::pomarancza_clicked()
-{
-    if (pomarancza==true){
-        pomarancza = false;
-    }else{
-        pomarancza = true;
-    }
-    printMessage(QString::number(pomarancza));
-}
-
-void MainWindow::truskawka_clicked()
-{
-    if (truskawka==true){
-        truskawka = false;
-    }else{
-        truskawka = true;
-    }
-    printMessage(QString::number(truskawka));
-}
-///////
-
-void MainWindow::jogurt_clicked()
-{
-    if (jogurt==true){
-        jogurt = false;
-    }else{
-        jogurt = true;
-    }
-    printMessage(QString::number(jogurt));
-}
-
-void MainWindow::mleko_clicked()
-{
-    if (mleko==true){
-        mleko = false;
-    }else{
-        mleko = true;
-    }
-    printMessage(QString::number(mleko));
-}
-
-void MainWindow::ser_clicked()
-{
-    if (ser==true){
-        ser = false;
-    }else{
-        ser = true;
-    }
-    printMessage(QString::number(ser));
-}
-
-void MainWindow::smietana_clicked()
-{
-    if (smietana==true){
-        smietana = false;
-    }else{
-        smietana = true;
-    }
-    printMessage(QString::number(smietana));
-}
-///////
-
-void MainWindow::cynamon_clicked()
-{
-    if (cynamon==true){
-        cynamon = false;
-    }else{
-        cynamon = true;
-    }
-    printMessage(QString::number(cynamon));
-}
-
-void MainWindow::tymianek_clicked()
-{
-    if (tymianek==true){
-        tymianek = false;
-    }else{
-        tymianek = true;
-    }
-    printMessage(QString::number(tymianek));
-}
-
-void MainWindow::galka_muszkatowa_clicked()
-{
-    if (galka_muszkatowa==true){
-        galka_muszkatowa = false;
-    }else{
-        galka_muszkatowa = true;
-    }
-    printMessage(QString::number(galka_muszkatowa));
-}
-
-void MainWindow::kminek_clicked()
-{
-    if (kminek==true){
-        kminek = false;
-    }else{
-        kminek = true;
-    }
-    printMessage(QString::number(kminek));
-}
