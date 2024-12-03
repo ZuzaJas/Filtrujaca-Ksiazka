@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     else
         ui->label_2->setText("[-] NIE POŁĄCZONO Z BAZĄ DANYCH");
 
-
+//---------------GUZIKI---------------------------------------------------------------------------------------------------------------------------------
 
     //wolowe
     QPushButton *wolowe = new QPushButton("Wołowe", this);
@@ -210,7 +210,8 @@ MainWindow::MainWindow(QWidget *parent)
     kminek->setGeometry(900, 670, 80, 20);
     connect(kminek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     kminek->setObjectName("kminek");
-    //guziki skladniki
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     //nowe okna
@@ -291,6 +292,6 @@ void MainWindow::skladnik_clicked()
     }
 }
 
-//KLIKNIĘCIE GUZIKÓW SKŁADNIKI----------------------------------------------------------------
+
 
 
