@@ -28,10 +28,13 @@ private:
     QTextEdit *opis;
     QComboBox *rodzaj;
     QComboBox *inne;
+    QLineEdit *dodatkowe_skladniki;
     QLabel *label_opis;
     QLabel *label_nazwa;
     QLabel *label_rodzaj;
     QLabel *label_inne;
+    QLabel *label_skladniki;
+    QLabel *label_dodatkowe_skladniki;
 
 
 

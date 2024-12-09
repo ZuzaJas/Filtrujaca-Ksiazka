@@ -18,10 +18,13 @@ Dialog::Dialog(QWidget *parent)
     , opis(new QTextEdit(this))
     , rodzaj(new QComboBox(this))
     , inne(new QComboBox(this))
+    , dodatkowe_skladniki(new QLineEdit(this))
     , label_opis(new QLabel(this))
     , label_nazwa(new QLabel(this))
     , label_rodzaj(new QLabel(this))
     , label_inne(new QLabel(this))
+    , label_skladniki(new QLabel(this))
+    , label_dodatkowe_skladniki(new QLabel(this))
 {
     ui->setupUi(this);
 
@@ -32,9 +35,15 @@ Dialog::Dialog(QWidget *parent)
     rodzaj->addItems(lista_rodzaj);
     label_rodzaj->setText("RODZAJ DANIA");
 
-    QStringList lista_inne = {""};
-    rodzaj->addItems(lista_rodzaj);
-    label_rodzaj->setText("RODZAJ DANIA");
+    label_skladniki->setText("SKŁADNIKI");
+
+
+    QStringList lista_inne = {"wegetariańskie", "ostre"};
+    inne->addItems(lista_inne);
+    label_inne->setText("INNE");
+
+    dodatkowe_skladniki->setPlaceholderText("Wprowadź jednowierszowy tekst...");
+    label_dodatkowe_skladniki->setText("DODATKOWE SKLADNIKI");
 
     opis->setPlaceholderText("Wprowadź wielowierszowy opis...");
     label_opis->setText("PRZYGOTOWANIE PRZEPISU");
@@ -42,11 +51,9 @@ Dialog::Dialog(QWidget *parent)
     setLayout(nullptr);
 
 
-
-
-    nazwa->setFixedSize(80,20);  // szerokość, wysok
-    nazwa->move(520,60); //x, y
-
+    nazwa->setFixedSize(450,30);  // szerokość, wysok
+    nazwa->setStyleSheet("border: 2px solid black; border-radius: 5px;");
+    nazwa->move(10,60); //x, y
 
     label_nazwa->setFixedSize(450, 10);
     label_nazwa->move(10,40);
@@ -56,6 +63,23 @@ Dialog::Dialog(QWidget *parent)
 
     label_rodzaj->setFixedSize(450, 10);
     label_rodzaj->move(10,100);
+
+    inne->setFixedSize(450,30);
+    inne->move(10,180);
+
+    label_inne->setFixedSize(450, 10);
+    label_inne->move(10,160);
+\
+    label_skladniki->setFixedSize(450, 10);
+    label_skladniki->move(10,220);
+
+
+    dodatkowe_skladniki->setFixedSize(350,30);
+    dodatkowe_skladniki->setStyleSheet("border: 2px solid black; border-radius: 5px;");
+    dodatkowe_skladniki->move(10,540);
+
+    label_dodatkowe_skladniki->setFixedSize(450, 10);
+    label_dodatkowe_skladniki->move(10,520);
 
     opis->setFixedSize(450,650);
     opis->move(520,60);

@@ -109,8 +109,8 @@
    <widget class="QPushButton" name="nowe_okno">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>710</y>
+      <x>50</x>
+      <y>620</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -152,7 +152,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
