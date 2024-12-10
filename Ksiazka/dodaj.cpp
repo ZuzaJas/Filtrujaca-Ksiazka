@@ -10,14 +10,17 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QStringList>
+#include <QCheckBox>
+#include <QtMath>
+
+QList<int> sql_rodzaj = {0, 0, 0, 0, 0, 0};
+QList<int> *wsk_sqp_rodzaj = &sql_rodzaj;
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
     , nazwa(new QLineEdit(this))
     , opis(new QTextEdit(this))
-    , rodzaj(new QComboBox(this))
-    , inne(new QComboBox(this))
     , dodatkowe_skladniki(new QLineEdit(this))
     , label_opis(new QLabel(this))
     , label_nazwa(new QLabel(this))
@@ -32,14 +35,12 @@ Dialog::Dialog(QWidget *parent)
     label_nazwa->setText("NAZWA");
 
     QStringList lista_rodzaj = {"śniadaniowe", "lunch", "obiadowe","napoje","desery","sosy i dodatki"};
-    rodzaj->addItems(lista_rodzaj);
     label_rodzaj->setText("RODZAJ DANIA");
 
     label_skladniki->setText("SKŁADNIKI");
 
 
     QStringList lista_inne = {"wegetariańskie", "ostre"};
-    inne->addItems(lista_inne);
     label_inne->setText("INNE");
 
     dodatkowe_skladniki->setPlaceholderText("Wprowadź jednowierszowy tekst...");
@@ -48,8 +49,7 @@ Dialog::Dialog(QWidget *parent)
     opis->setPlaceholderText("Wprowadź wielowierszowy opis...");
     label_opis->setText("PRZYGOTOWANIE PRZEPISU");
 
-    setLayout(nullptr);
-
+    //rozstawienie
 
     nazwa->setFixedSize(450,30);  // szerokość, wysok
     nazwa->setStyleSheet("border: 2px solid black; border-radius: 5px;");
@@ -58,20 +58,18 @@ Dialog::Dialog(QWidget *parent)
     label_nazwa->setFixedSize(450, 10);
     label_nazwa->move(10,40);
 
-    rodzaj->setFixedSize(450,30);
-    rodzaj->move(10,120);
-
+    stworz_checkbox(lista_rodzaj, wsk_sqp_rodzaj,10, 120);
     label_rodzaj->setFixedSize(450, 10);
     label_rodzaj->move(10,100);
 
-    inne->setFixedSize(450,30);
-    inne->move(10,180);
+    //inne->setFixedSize(450,30);
+    //inne->move(10,210);
 
     label_inne->setFixedSize(450, 10);
-    label_inne->move(10,160);
+    label_inne->move(10,190);
 \
     label_skladniki->setFixedSize(450, 10);
-    label_skladniki->move(10,220);
+    label_skladniki->move(10,250);
 
 
     dodatkowe_skladniki->setFixedSize(350,30);
@@ -108,4 +106,54 @@ void Dialog::close_window()
     MainWindow *okno = new MainWindow(); // Tworzymy nowe okno główne
     okno->show(); // Pokazujemy okno główne
 }
+
+
+
+//zrobić wszystko na checkboxy
+void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, float y) {
+
+    int podzial = nazwa.size();
+    if((nazwa.size())>4){
+        podzial = std::round(nazwa.size()/2);
+    }
+
+    qDebug() << "Nazwa" << nazwa.size();
+    for (int i = 0; i < nazwa.size(); ++i) {
+        qDebug() << "Tworzenie checkboxa: " << nazwa[i];
+        QCheckBox *checkBox = new QCheckBox(nazwa[i], this);
+        if (i<podzial){
+            float xOffset = ((1000/2)-10)/qFloor(nazwa.size()/2);
+            qDebug() << "Floor" << qFloor(nazwa.size()/2);
+            checkBox->setGeometry(x + i * xOffset, y, 150, 20);
+        }else{
+            float xOffset = ((1000/2)-10)/qCeil(nazwa.size()/2);
+            qDebug() << "Ceil" << qCeil(nazwa.size()/2);
+            checkBox->setGeometry(x + (i%qCeil(nazwa.size()/2)) * xOffset, y+30, 150, 20);
+
+        }
+        connect(checkBox, &QCheckBox::toggled, this, [this, i, index]
+        {
+            if (i < index->size()) {
+                qDebug() << "Checkbox toggled: indeks" << i;
+                (*index)[i] = checkTrue((*index)[i]);  // Poprawione użycie wskaźnika
+                qDebug() << "Nowa wartość indeksu" << i << ":" << (*index)[i];
+            } else {
+                qDebug() << "Błąd: Indeks poza zakresem!";
+                qDebug() << "Rozmiar rodzaj przed iteracją:" << index->size();
+            }
+        });
+
+
+    }
+}
+
+
+
+int Dialog::checkTrue(int value) {
+    return value == 0 ? 1 : 0;
+}
+
+
+
+
 

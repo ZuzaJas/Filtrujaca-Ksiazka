@@ -71,7 +71,7 @@ public:
         tymianek->setGeometry(QRect(650, 670, 80, 20));
         nowe_okno = new QPushButton(centralwidget);
         nowe_okno->setObjectName("nowe_okno");
-        nowe_okno->setGeometry(QRect(30, 710, 80, 24));
+        nowe_okno->setGeometry(QRect(50, 620, 80, 24));
         zdjecie = new QLabel(centralwidget);
         zdjecie->setObjectName("zdjecie");
         zdjecie->setGeometry(QRect(170, 480, 248, 283));
@@ -81,7 +81,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1000, 21));
+        menubar->setGeometry(QRect(0, 0, 1000, 17));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");

@@ -6,6 +6,10 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QComboBox>
+#include <QStringList>
+
+
+
 
 namespace Ui {
 class Dialog;
@@ -21,13 +25,13 @@ public:
 
 private slots:
     void close_window();
+    void stworz_checkbox(QStringList nazwa,QList<int> *index, float x, float y);
+    int checkTrue(int value);
 
 private:
     Ui::Dialog *ui;
     QLineEdit *nazwa;
     QTextEdit *opis;
-    QComboBox *rodzaj;
-    QComboBox *inne;
     QLineEdit *dodatkowe_skladniki;
     QLabel *label_opis;
     QLabel *label_nazwa;
@@ -35,10 +39,8 @@ private:
     QLabel *label_inne;
     QLabel *label_skladniki;
     QLabel *label_dodatkowe_skladniki;
-
-
-
-
 };
+
+extern QList<int> sql_rodzaj;
 
 #endif // DODAJ_H
