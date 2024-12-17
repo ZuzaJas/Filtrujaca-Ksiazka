@@ -13,8 +13,25 @@
 #include <QCheckBox>
 #include <QtMath>
 
-QList<int> sql_rodzaj = {0, 0, 0, 0, 0, 0};
-QList<int> *wsk_sqp_rodzaj = &sql_rodzaj;
+QList<int> sql_rodzaj = {0, 0, 0, 0, 0,0};
+QList<int> *wsk_sql_rodzaj = &sql_rodzaj;
+
+QList<int> sql_inne = {0, 0};
+QList<int> *wsk_sql_inne = &sql_inne;
+
+QList<int> sql_skl_nabial = {0, 0, 0, 0};
+QList<int> *wsk_sql_skl_nabial = &sql_skl_nabial;
+QList<int> sql_skl_baza = {0, 0, 0, 0};
+QList<int> *wsk_sql_skl_baza = &sql_skl_baza;
+QList<int> sql_skl_warzywa = {0, 0, 0, 0, 0, 0};
+QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> sql_skl_owoce = {0, 0, 0, 0, 0, 0};
+QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> sql_skl_nabial = {0, 0, 0, 0};
+QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> sql_skl_przyprawy = {0, 0, 0, 0};
+QList<int> *wsk_sql_inne = &sql_inne;
+
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -38,7 +55,12 @@ Dialog::Dialog(QWidget *parent)
     label_rodzaj->setText("RODZAJ DANIA");
 
     label_skladniki->setText("SKŁADNIKI");
-
+    QStringList lista_bialko = {"wołowe", "ryba", "jajko", "kurczak"};
+    QStringList lista_baza = {"makaron", "ryż", "pieczywo", "mąka"};
+    QStringList lista_warzywa = {"marchew", "cebula", "ogórek", "papryka", "pomidor", "ziemniak"};
+    QStringList lista_owoce = {"banan", "cytryna", "jabłko", "malina", "pomarańcza", "truskawka"};
+    QStringList lista_nabial = {"mleko", "ser", "smietana", "jogurt"};
+    QStringList lista_przyprawy = {"cynamon","tymianek","galka_muszkatowa","kminek"};
 
     QStringList lista_inne = {"wegetariańskie", "ostre"};
     label_inne->setText("INNE");
@@ -58,19 +80,18 @@ Dialog::Dialog(QWidget *parent)
     label_nazwa->setFixedSize(450, 10);
     label_nazwa->move(10,40);
 
-    stworz_checkbox(lista_rodzaj, wsk_sqp_rodzaj,10, 120);
+    stworz_checkbox(lista_rodzaj, wsk_sql_rodzaj,10, 120);
     label_rodzaj->setFixedSize(450, 10);
     label_rodzaj->move(10,100);
 
-    //inne->setFixedSize(450,30);
-    //inne->move(10,210);
 
+    stworz_checkbox(lista_inne, wsk_sql_inne, 10,220);
     label_inne->setFixedSize(450, 10);
     label_inne->move(10,190);
 \
     label_skladniki->setFixedSize(450, 10);
     label_skladniki->move(10,250);
-
+    stworz_checkbox(lista_nabial, wsk_sql_inne, 10,220);
 
     dodatkowe_skladniki->setFixedSize(350,30);
     dodatkowe_skladniki->setStyleSheet("border: 2px solid black; border-radius: 5px;");
@@ -112,24 +133,32 @@ void Dialog::close_window()
 //zrobić wszystko na checkboxy
 void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, float y) {
 
-    int podzial = nazwa.size();
+    int podzial;
     if((nazwa.size())>4){
-        podzial = std::round(nazwa.size()/2);
+        podzial = qFloor(nazwa.size()/2);
+    }else{
+        podzial = 0;
     }
 
-    qDebug() << "Nazwa" << nazwa.size();
+    //qDebug() << "Nazwa" << nazwa.size();
     for (int i = 0; i < nazwa.size(); ++i) {
         qDebug() << "Tworzenie checkboxa: " << nazwa[i];
         QCheckBox *checkBox = new QCheckBox(nazwa[i], this);
-        if (i<podzial){
-            float xOffset = ((1000/2)-10)/qFloor(nazwa.size()/2);
-            qDebug() << "Floor" << qFloor(nazwa.size()/2);
+        if (i<=podzial){
+            float xOffset = ((800/2)-x)/(qFloor(nazwa.size()/2));
+            //qDebug() << "Floor" << qFloor(nazwa.size()/2);
             checkBox->setGeometry(x + i * xOffset, y, 150, 20);
+            qDebug() << "Pozycja x:" << (x + i * xOffset) << "  Pozycja y:" << y;
+        }else if(podzial==0){
+            float xOffset = ((800/2)-x)/qCeil(nazwa.size()/2);
+            //qDebug() << "Ceil" << qCeil(nazwa.size()/2);
+            checkBox->setGeometry((x + i * xOffset), y, 150, 20);
+            qDebug() << "Pozycja x:" << (x + i * xOffset) << "  Pozycja y:" << y+30;
         }else{
-            float xOffset = ((1000/2)-10)/qCeil(nazwa.size()/2);
-            qDebug() << "Ceil" << qCeil(nazwa.size()/2);
-            checkBox->setGeometry(x + (i%qCeil(nazwa.size()/2)) * xOffset, y+30, 150, 20);
-
+            float xOffset = ((800/2)-x)/(qFloor(nazwa.size()/2));
+            //qDebug() << "Ceil" << qCeil(nazwa.size()/2);
+            checkBox->setGeometry(x + ((i-1)%qCeil(nazwa.size()/2)) * xOffset, y+30, 150, 20);
+            qDebug() << "Pozycja x:" << x + ((i-1)%qCeil(nazwa.size()/2))*xOffset << "  Pozycja y:" << y+30;
         }
         connect(checkBox, &QCheckBox::toggled, this, [this, i, index]
         {

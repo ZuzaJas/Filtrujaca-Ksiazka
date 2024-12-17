@@ -13,7 +13,7 @@
 
 QStringList lista_skladniki = {
     "wolowe","ryba","jajko","kurczak",
-    "makaron", "ryz", "pieczywo",
+    "makaron", "ryz", "pieczywo", "maka",
     "marchew", "cebula","ogorek", "papryka", "pomidor", "ziemniak",
     "banan","cytryna","jablko","malina","pomarancza","truskawka",
     "mleko", "ser","smietana", "jogurt",
@@ -80,15 +80,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     //ryz
     QPushButton *ryz = new QPushButton("Ryż", this);
-    ryz->setGeometry(710, 160, 80, 20);
+    ryz->setGeometry(650, 160, 80, 20);
     connect(ryz, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     ryz->setObjectName("ryz");
 
     //pieczywo
     QPushButton *pieczywo = new QPushButton("Pieczywo", this);
-    pieczywo->setGeometry(900, 160, 80, 20);
+    pieczywo->setGeometry(770, 160, 80, 20);
     connect(pieczywo, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     pieczywo->setObjectName("pieczywo");
+
+    //mąka
+    QPushButton *maka = new QPushButton("Mąka", this);
+    maka->setGeometry(900, 160, 80, 20);
+    connect(maka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    maka->setObjectName("maka");
 
     //marchew
     QPushButton *marchew = new QPushButton("Marchew", this);
