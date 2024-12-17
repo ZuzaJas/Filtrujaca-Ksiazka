@@ -26,7 +26,7 @@ public:
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName("Dialog");
-        Dialog->resize(1000, 800);
+        Dialog->resize(1000, 775);
         powrot = new QPushButton(Dialog);
         powrot->setObjectName("powrot");
         powrot->setGeometry(QRect(890, 740, 80, 24));

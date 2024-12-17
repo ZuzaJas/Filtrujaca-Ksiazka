@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QStringList>
+#include <QString>
 
 
 
@@ -27,6 +28,8 @@ private slots:
     void close_window();
     void stworz_checkbox(QStringList nazwa,QList<int> *index, float x, float y);
     int checkTrue(int value);
+    void zatwierdz_clicked();
+    QString getFilePath(QString Folder, QString Plik);
 
 private:
     Ui::Dialog *ui;

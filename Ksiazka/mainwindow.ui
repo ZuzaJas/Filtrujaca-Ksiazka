@@ -54,63 +54,11 @@
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="kminek">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>670</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Kminek</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="galka_muszkatowa">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>670</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Gałka muszk.</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="cynamon">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>670</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Cynamon</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="tymianek">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>670</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tymianek</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="nowe_okno">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>620</y>
+      <y>600</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -122,8 +70,8 @@
    <widget class="QLabel" name="zdjecie">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>480</y>
+      <x>190</x>
+      <y>260</y>
       <width>248</width>
       <height>283</height>
      </rect>
@@ -152,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -47,7 +47,11 @@ constexpr auto qt_meta_stringdata_CLASSDialogENDCLASS = QtMocHelpers::stringData
     "x",
     "y",
     "checkTrue",
-    "value"
+    "value",
+    "zatwierdz_clicked",
+    "getFilePath",
+    "Folder",
+    "Plik"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -60,7 +64,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDialogENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,14 +72,18 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDialogENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   32,    2, 0x08,    1 /* Private */,
-       3,    4,   33,    2, 0x08,    2 /* Private */,
-       9,    1,   42,    2, 0x08,    7 /* Private */,
+       1,    0,   44,    2, 0x08,    1 /* Private */,
+       3,    4,   45,    2, 0x08,    2 /* Private */,
+       9,    1,   54,    2, 0x08,    7 /* Private */,
+      11,    0,   57,    2, 0x08,    9 /* Private */,
+      12,    2,   58,    2, 0x08,   10 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QStringList, 0x80000000 | 5, QMetaType::Float, QMetaType::Float,    4,    6,    7,    8,
     QMetaType::Int, QMetaType::Int,   10,
+    QMetaType::Void,
+    QMetaType::QString, QMetaType::QString, QMetaType::QString,   13,   14,
 
        0        // eod
 };
@@ -99,7 +107,13 @@ Q_CONSTINIT const QMetaObject Dialog::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
         // method 'checkTrue'
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'zatwierdz_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'getFilePath'
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
 } };
@@ -114,6 +128,9 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: _t->stworz_checkbox((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<int>*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[4]))); break;
         case 2: { int _r = _t->checkTrue((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 3: _t->zatwierdz_clicked(); break;
+        case 4: { QString _r = _t->getFilePath((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     }
@@ -138,13 +155,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }

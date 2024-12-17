@@ -25,10 +25,6 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QLabel *label;
-    QPushButton *kminek;
-    QPushButton *galka_muszkatowa;
-    QPushButton *cynamon;
-    QPushButton *tymianek;
     QPushButton *nowe_okno;
     QLabel *zdjecie;
     QLabel *label_2;
@@ -57,31 +53,19 @@ public:
         label->setLineWidth(5);
         label->setTextFormat(Qt::TextFormat::RichText);
         label->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        kminek = new QPushButton(centralwidget);
-        kminek->setObjectName("kminek");
-        kminek->setGeometry(QRect(520, 670, 80, 20));
-        galka_muszkatowa = new QPushButton(centralwidget);
-        galka_muszkatowa->setObjectName("galka_muszkatowa");
-        galka_muszkatowa->setGeometry(QRect(900, 670, 80, 20));
-        cynamon = new QPushButton(centralwidget);
-        cynamon->setObjectName("cynamon");
-        cynamon->setGeometry(QRect(770, 670, 80, 20));
-        tymianek = new QPushButton(centralwidget);
-        tymianek->setObjectName("tymianek");
-        tymianek->setGeometry(QRect(650, 670, 80, 20));
         nowe_okno = new QPushButton(centralwidget);
         nowe_okno->setObjectName("nowe_okno");
-        nowe_okno->setGeometry(QRect(50, 620, 80, 24));
+        nowe_okno->setGeometry(QRect(50, 600, 80, 24));
         zdjecie = new QLabel(centralwidget);
         zdjecie->setObjectName("zdjecie");
-        zdjecie->setGeometry(QRect(170, 480, 248, 283));
+        zdjecie->setGeometry(QRect(190, 260, 248, 283));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(60, 360, 201, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1000, 17));
+        menubar->setGeometry(QRect(0, 0, 1000, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -96,10 +80,6 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        kminek->setText(QCoreApplication::translate("MainWindow", "Kminek", nullptr));
-        galka_muszkatowa->setText(QCoreApplication::translate("MainWindow", "Ga\305\202ka muszk.", nullptr));
-        cynamon->setText(QCoreApplication::translate("MainWindow", "Cynamon", nullptr));
-        tymianek->setText(QCoreApplication::translate("MainWindow", "Tymianek", nullptr));
         nowe_okno->setText(QCoreApplication::translate("MainWindow", "Nowe Okno", nullptr));
         zdjecie->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "Baza danych", nullptr));

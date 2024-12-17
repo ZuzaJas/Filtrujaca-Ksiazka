@@ -195,25 +195,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     //cynamon
     QPushButton *cynamon = new QPushButton("Cynamon", this);
-    cynamon->setGeometry(520, 670, 80, 20);
+    cynamon->setGeometry(520, 620, 80, 20);
     connect(cynamon, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     cynamon->setObjectName("cynamon");
 
     //tymianek
     QPushButton *tymianek = new QPushButton("Tymianek", this);
-    tymianek->setGeometry(650, 670, 80, 20);
+    tymianek->setGeometry(650, 620, 80, 20);
     connect(tymianek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     tymianek->setObjectName("tymianek");
 
     //galka_muszkatowa
     QPushButton *galka_muszkatowa = new QPushButton("Gałka Muszk.", this);
-    galka_muszkatowa->setGeometry(770, 670, 80, 20);
+    galka_muszkatowa->setGeometry(770, 620, 80, 20);
     connect(galka_muszkatowa, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     galka_muszkatowa->setObjectName("galka_muszkatowa");
 
     //kminek
     QPushButton *kminek = new QPushButton("Kminek", this);
-    kminek->setGeometry(900, 670, 80, 20);
+    kminek->setGeometry(900, 620, 80, 20);
     connect(kminek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
     kminek->setObjectName("kminek");
 
@@ -223,8 +223,10 @@ MainWindow::MainWindow(QWidget *parent)
     //nowe okna
     connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
 
-    QPixmap pix("C:\\Users\\48881\\Documents\\Ksiazka\\Filtrujaca-Ksiazka\\Ksiazka\\Lamb_Eat_Good.gif");
-    ui->zdjecie->setPixmap(pix);
+    QPixmap pix("C:\\Users\\48881\\Documents\\Ksiazka\\Filtrujaca-Ksiazka\\Ksiazka\\Miku_teto_kitchen.png");
+    int pix_h = ui->zdjecie->height();
+    int pix_w = ui->zdjecie->width();
+    ui->zdjecie->setPixmap(pix.scaled(pix_w,pix_h,Qt::KeepAspectRatio));
     listWidget = new QListWidget(this);
 
     // Dodanie przykładowych elementów do listy

@@ -12,6 +12,9 @@
 #include <QStringList>
 #include <QCheckBox>
 #include <QtMath>
+#include <QDir>
+#include <QString>
+
 
 QList<int> sql_rodzaj = {0, 0, 0, 0, 0,0};
 QList<int> *wsk_sql_rodzaj = &sql_rodzaj;
@@ -19,18 +22,20 @@ QList<int> *wsk_sql_rodzaj = &sql_rodzaj;
 QList<int> sql_inne = {0, 0};
 QList<int> *wsk_sql_inne = &sql_inne;
 
+QList<int> sql_skl_bialko = {0, 0, 0, 0};
+QList<int> *wsk_sql_skl_bialko = &sql_skl_bialko;
 QList<int> sql_skl_nabial = {0, 0, 0, 0};
 QList<int> *wsk_sql_skl_nabial = &sql_skl_nabial;
 QList<int> sql_skl_baza = {0, 0, 0, 0};
 QList<int> *wsk_sql_skl_baza = &sql_skl_baza;
 QList<int> sql_skl_warzywa = {0, 0, 0, 0, 0, 0};
-QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> *wsk_sql_skl_warzywa = &sql_skl_warzywa;
 QList<int> sql_skl_owoce = {0, 0, 0, 0, 0, 0};
-QList<int> *wsk_sql_inne = &sql_inne;
-QList<int> sql_skl_nabial = {0, 0, 0, 0};
-QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> *wsk_sql_skl_owoce = &sql_skl_owoce;
 QList<int> sql_skl_przyprawy = {0, 0, 0, 0};
-QList<int> *wsk_sql_inne = &sql_inne;
+QList<int> *wsk_sql_skl_przyprawy = &sql_skl_przyprawy;
+
+
 
 
 Dialog::Dialog(QWidget *parent)
@@ -89,9 +94,15 @@ Dialog::Dialog(QWidget *parent)
     label_inne->setFixedSize(450, 10);
     label_inne->move(10,190);
 \
+    stworz_checkbox(lista_bialko, wsk_sql_skl_bialko, 10,270);
+    stworz_checkbox(lista_baza, wsk_sql_skl_baza, 10,300);
+    stworz_checkbox(lista_warzywa, wsk_sql_skl_warzywa, 10,330);
+    stworz_checkbox(lista_owoce, wsk_sql_skl_owoce, 10,390);
+    stworz_checkbox(lista_nabial, wsk_sql_skl_nabial, 10,450);
+    stworz_checkbox(lista_przyprawy, wsk_sql_skl_przyprawy, 10,480);
     label_skladniki->setFixedSize(450, 10);
     label_skladniki->move(10,250);
-    stworz_checkbox(lista_nabial, wsk_sql_inne, 10,220);
+
 
     dodatkowe_skladniki->setFixedSize(350,30);
     dodatkowe_skladniki->setStyleSheet("border: 2px solid black; border-radius: 5px;");
@@ -112,6 +123,21 @@ Dialog::Dialog(QWidget *parent)
     resize(1000, 800);
 
     connect(ui->powrot, &QPushButton::clicked, this, &Dialog::close_window);
+    connect(ui->zatwierdz, &QPushButton::clicked, this, &Dialog::zatwierdz_clicked);
+
+    //SQL
+    QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
+    QString sciezka_przepisy = getFilePath("bazy", "przepisy.db");
+    baza_przepisy.setDatabaseName(sciezka_przepisy);
+    if(baza_przepisy.open()) {
+        qDebug() << "[+] POŁĄCZONO ";
+    } else {
+        qDebug() << "[-] NIE POŁĄCZONO Z BAZĄ DANYCH";
+        qDebug() << "Błąd: " << baza_przepisy.lastError().text();
+    }
+
+
+
 }
 
 
@@ -132,36 +158,28 @@ void Dialog::close_window()
 
 //zrobić wszystko na checkboxy
 void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, float y) {
+    int liczbaElementow = nazwa.size();
+    int elementyNaRzad = liczbaElementow <= 4 ? liczbaElementow : (liczbaElementow <= 6 ? 3 : qCeil(liczbaElementow / 2.0)); // Maksymalnie 3–6 w rzędzie
+    float rzadOffset = 30;  // Odstęp między rzędami
+    float kolumnaOffset = ((600 / elementyNaRzad) - x); // Dynamiczny odstęp w poziomie
 
-    int podzial;
-    if((nazwa.size())>4){
-        podzial = qFloor(nazwa.size()/2);
-    }else{
-        podzial = 0;
-    }
-
-    //qDebug() << "Nazwa" << nazwa.size();
-    for (int i = 0; i < nazwa.size(); ++i) {
+    for (int i = 0; i < liczbaElementow; ++i) {
         qDebug() << "Tworzenie checkboxa: " << nazwa[i];
+
         QCheckBox *checkBox = new QCheckBox(nazwa[i], this);
-        if (i<=podzial){
-            float xOffset = ((800/2)-x)/(qFloor(nazwa.size()/2));
-            //qDebug() << "Floor" << qFloor(nazwa.size()/2);
-            checkBox->setGeometry(x + i * xOffset, y, 150, 20);
-            qDebug() << "Pozycja x:" << (x + i * xOffset) << "  Pozycja y:" << y;
-        }else if(podzial==0){
-            float xOffset = ((800/2)-x)/qCeil(nazwa.size()/2);
-            //qDebug() << "Ceil" << qCeil(nazwa.size()/2);
-            checkBox->setGeometry((x + i * xOffset), y, 150, 20);
-            qDebug() << "Pozycja x:" << (x + i * xOffset) << "  Pozycja y:" << y+30;
-        }else{
-            float xOffset = ((800/2)-x)/(qFloor(nazwa.size()/2));
-            //qDebug() << "Ceil" << qCeil(nazwa.size()/2);
-            checkBox->setGeometry(x + ((i-1)%qCeil(nazwa.size()/2)) * xOffset, y+30, 150, 20);
-            qDebug() << "Pozycja x:" << x + ((i-1)%qCeil(nazwa.size()/2))*xOffset << "  Pozycja y:" << y+30;
-        }
-        connect(checkBox, &QCheckBox::toggled, this, [this, i, index]
-        {
+
+        // Obliczanie pozycji checkboxa w rzędach
+        int rzad = i / elementyNaRzad;  // Indeks rzędu
+        int kolumna = i % elementyNaRzad; // Indeks w rzędzie
+
+        float xPos = x + kolumna * kolumnaOffset;
+        float yPos = y + rzad * rzadOffset;
+
+        checkBox->setGeometry(xPos, yPos, 150, 20);
+        qDebug() << "Pozycja x:" << xPos << " Pozycja y:" << yPos;
+
+        // Obsługa zdarzenia
+        connect(checkBox, &QCheckBox::toggled, this, [this, i, index] {
             if (i < index->size()) {
                 qDebug() << "Checkbox toggled: indeks" << i;
                 (*index)[i] = checkTrue((*index)[i]);  // Poprawione użycie wskaźnika
@@ -171,8 +189,6 @@ void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, floa
                 qDebug() << "Rozmiar rodzaj przed iteracją:" << index->size();
             }
         });
-
-
     }
 }
 
@@ -182,7 +198,35 @@ int Dialog::checkTrue(int value) {
     return value == 0 ? 1 : 0;
 }
 
+void Dialog::zatwierdz_clicked(){
+    qDebug() << "Zatwierdzone";
+}
 
 
+QString Dialog::getFilePath(QString Folder, QString Plik) {
+    QDir currentDir = QDir::current();
+
+    QString folderPath = currentDir.filePath(Folder);
+
+
+    if (!QDir(folderPath).exists()) {
+        if (!currentDir.mkpath(Folder)) {
+            qDebug() << "[-] Błąd tworzenia folderu:" << folderPath;
+            return QString(); // Zwróć pustą ścieżkę w razie błędu
+        }
+    }
+
+    // Twórz pełną ścieżkę do pliku
+    QString filePath = QDir(folderPath).filePath(Plik);
+
+    qDebug() << "[i] Ścieżka do pliku:" << filePath;
+    return filePath;
+}
+
+// Qquery qry;
+// qry.prepare("    komenda   nazwa (kolumny)     (:zmienna )   ")
+// qry.bind(" :zmienna ",zmienna)
+
+// qry.exec()
 
 
