@@ -1,5 +1,5 @@
-C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_dodaj.cpp: C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/dodaj.h \
-  C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_dodaj.cpp: C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/dodaj.h \
+  C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QStringList \
   C:/Qt/6.8.0/mingw_64/include/QtCore/q20functional.h \
@@ -62,6 +62,7 @@ C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8
   C:/Qt/6.8.0/mingw_64/include/QtCore/qmargins.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/qmath.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/qmetacontainer.h \
+  C:/Qt/6.8.0/mingw_64/include/QtCore/qmetaobject.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/qmetatype.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/qminmax.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/qnamespace.h \
@@ -159,6 +160,11 @@ C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8
   C:/Qt/6.8.0/mingw_64/include/QtGui/qvalidator.h \
   C:/Qt/6.8.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.8.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.8.0/mingw_64/include/QtSql/QSqlDatabase \
+  C:/Qt/6.8.0/mingw_64/include/QtSql/qsqldatabase.h \
+  C:/Qt/6.8.0/mingw_64/include/QtSql/qtsql-config.h \
+  C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlexports.h \
+  C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlglobal.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QComboBox \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QDialog \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QLabel \

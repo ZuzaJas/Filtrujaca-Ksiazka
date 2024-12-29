@@ -51,7 +51,10 @@ constexpr auto qt_meta_stringdata_CLASSDialogENDCLASS = QtMocHelpers::stringData
     "zatwierdz_clicked",
     "getFilePath",
     "Folder",
-    "Plik"
+    "Plik",
+    "ListaNaString",
+    "QList<int>",
+    "lista"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -64,7 +67,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDialogENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,11 +75,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDialogENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x08,    1 /* Private */,
-       3,    4,   45,    2, 0x08,    2 /* Private */,
-       9,    1,   54,    2, 0x08,    7 /* Private */,
-      11,    0,   57,    2, 0x08,    9 /* Private */,
-      12,    2,   58,    2, 0x08,   10 /* Private */,
+       1,    0,   50,    2, 0x08,    1 /* Private */,
+       3,    4,   51,    2, 0x08,    2 /* Private */,
+       9,    1,   60,    2, 0x08,    7 /* Private */,
+      11,    0,   63,    2, 0x08,    9 /* Private */,
+      12,    2,   64,    2, 0x08,   10 /* Private */,
+      15,    1,   69,    2, 0x08,   13 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,6 +88,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDialogENDCLASS[] = {
     QMetaType::Int, QMetaType::Int,   10,
     QMetaType::Void,
     QMetaType::QString, QMetaType::QString, QMetaType::QString,   13,   14,
+    QMetaType::QString, 0x80000000 | 16,   17,
 
        0        // eod
 };
@@ -113,7 +118,10 @@ Q_CONSTINIT const QMetaObject Dialog::staticMetaObject = { {
         // method 'getFilePath'
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        // method 'ListaNaString'
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QList<int> &, std::false_type>
     >,
     nullptr
 } };
@@ -131,7 +139,20 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 3: _t->zatwierdz_clicked(); break;
         case 4: { QString _r = _t->getFilePath((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+        case 5: { QString _r = _t->ListaNaString((*reinterpret_cast< std::add_pointer_t<QList<int>>>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 5:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<int> >(); break;
+            }
+            break;
         }
     }
 }
@@ -155,13 +176,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        if (_id < 6)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 6;
     }
     return _id;
 }

@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QStringList>
 #include <QString>
+#include <QSqlDatabase>
 
 
 
@@ -30,6 +31,7 @@ private slots:
     int checkTrue(int value);
     void zatwierdz_clicked();
     QString getFilePath(QString Folder, QString Plik);
+    QString ListaNaString(const QList<int> &lista);
 
 private:
     Ui::Dialog *ui;

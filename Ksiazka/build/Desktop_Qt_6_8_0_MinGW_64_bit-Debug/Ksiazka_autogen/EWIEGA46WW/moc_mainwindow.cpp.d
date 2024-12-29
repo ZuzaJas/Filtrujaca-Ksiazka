@@ -1,5 +1,5 @@
-C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/mainwindow.h \
-  C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/mainwindow.h \
+  C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QFileInfo \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QHash \

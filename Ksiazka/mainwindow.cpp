@@ -7,6 +7,9 @@
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
+#include <QString>
+
 
 //zmienne skladniki
 ///
@@ -38,13 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    //SQL
-    QSqlDatabase baza = QSqlDatabase::addDatabase("QSQLITE");
-    baza.setDatabaseName("C:\\test.db");
-    if(baza.open())
-        ui->label_2->setText("[+] POŁĄCZONO ");
-    else
-        ui->label_2->setText("[-] NIE POŁĄCZONO Z BAZĄ DANYCH");
+
 
 //---------------GUZIKI---------------------------------------------------------------------------------------------------------------------------------
 
@@ -222,8 +219,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //nowe okna
     connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
-
-    QPixmap pix("C:\\Users\\48881\\Documents\\Ksiazka\\Filtrujaca-Ksiazka\\Ksiazka\\Miku_teto_kitchen.png");
+    QDir currentDir = QDir::current();
+    qDebug() <<"Current" <<currentDir;
+    QString filePath = QDir(currentDir).filePath("Miku_teto_kitchen.png");
+    qDebug() << "ścieżka"<<filePath;
+    QPixmap pix("C:\\Users\\suzzi\\OneDrive\\Dokumenty\\GitHub\\Filtrujaca-Ksiazka\\Ksiazka\\Miku_teto_kitchen.png");
     int pix_h = ui->zdjecie->height();
     int pix_w = ui->zdjecie->width();
     ui->zdjecie->setPixmap(pix.scaled(pix_w,pix_h,Qt::KeepAspectRatio));

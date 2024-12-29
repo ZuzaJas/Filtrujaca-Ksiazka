@@ -14,6 +14,9 @@
 #include <QtMath>
 #include <QDir>
 #include <QString>
+#include <QStringList>
+#include <algorithm>
+#include <QSqlDatabase>
 
 
 QList<int> sql_rodzaj = {0, 0, 0, 0, 0,0};
@@ -123,20 +126,10 @@ Dialog::Dialog(QWidget *parent)
     resize(1000, 800);
 
     connect(ui->powrot, &QPushButton::clicked, this, &Dialog::close_window);
-    connect(ui->zatwierdz, &QPushButton::clicked, this, &Dialog::zatwierdz_clicked);
 
-    //SQL
-    QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
-    QString sciezka_przepisy = getFilePath("bazy", "przepisy.db");
-    baza_przepisy.setDatabaseName(sciezka_przepisy);
-    if(baza_przepisy.open()) {
-        qDebug() << "[+] POŁĄCZONO ";
-    } else {
-        qDebug() << "[-] NIE POŁĄCZONO Z BAZĄ DANYCH";
-        qDebug() << "Błąd: " << baza_przepisy.lastError().text();
-    }
+    qDebug()<<"!!!app path"<<qApp->applicationDirPath();
 
-
+    connect(ui->zatwierdz, &QPushButton::clicked, this, zatwierdz_clicked);
 
 }
 
@@ -164,7 +157,7 @@ void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, floa
     float kolumnaOffset = ((600 / elementyNaRzad) - x); // Dynamiczny odstęp w poziomie
 
     for (int i = 0; i < liczbaElementow; ++i) {
-        qDebug() << "Tworzenie checkboxa: " << nazwa[i];
+        //qDebug() << "Tworzenie checkboxa: " << nazwa[i];
 
         QCheckBox *checkBox = new QCheckBox(nazwa[i], this);
 
@@ -176,7 +169,7 @@ void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, floa
         float yPos = y + rzad * rzadOffset;
 
         checkBox->setGeometry(xPos, yPos, 150, 20);
-        qDebug() << "Pozycja x:" << xPos << " Pozycja y:" << yPos;
+        //qDebug() << "Pozycja x:" << xPos << " Pozycja y:" << yPos;
 
         // Obsługa zdarzenia
         connect(checkBox, &QCheckBox::toggled, this, [this, i, index] {
@@ -198,13 +191,68 @@ int Dialog::checkTrue(int value) {
     return value == 0 ? 1 : 0;
 }
 
-void Dialog::zatwierdz_clicked(){
-    qDebug() << "Zatwierdzone";
+void Dialog::zatwierdz_clicked() {
+
+
+    //SQL
+    QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
+    QString sciezka_przepisy = getFilePath("bazy", "przepisy.db");
+    qDebug() << "{{ŚCIEŻKA}}  " << sciezka_przepisy;
+    baza_przepisy.setDatabaseName(sciezka_przepisy);
+    if(baza_przepisy.open()) {
+        qDebug() << "[+] POŁĄCZONO ";
+        baza_przepisy.open();
+    } else {
+        qDebug() << "[-] NIE POŁĄCZONO Z BAZĄ DANYCH";
+        qDebug() << "Błąd: " << baza_przepisy.lastError().text();
+    }
+
+    QSqlQuery query(baza_przepisy);
+
+    if (!query.prepare(R"(
+        INSERT INTO przepisy
+        (Nazwa, Rodzaj, inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis)
+        VALUES (:Nazwa, :Rodzaj, :inne, :bialko, :baza, :warzywa, :owoce, :nabial, :przyprawy, :opis)
+    )")) {
+        qDebug() << "Błąd przygotowania zapytania: " << query.lastError().text();
+        return;
+    }
+
+    query.bindValue(":Nazwa", nazwa->text());
+    query.bindValue(":Rodzaj", ListaNaString(sql_rodzaj));
+    query.bindValue(":inne", ListaNaString(sql_inne));
+    query.bindValue(":bialko", ListaNaString(sql_skl_bialko));
+    query.bindValue(":baza", ListaNaString(sql_skl_baza));
+    query.bindValue(":warzywa", ListaNaString(sql_skl_warzywa));
+    query.bindValue(":owoce", ListaNaString(sql_skl_owoce));
+    query.bindValue(":nabial", ListaNaString(sql_skl_nabial));
+    query.bindValue(":przyprawy", ListaNaString(sql_skl_przyprawy));
+    query.bindValue(":opis", opis->toPlainText());
+
+    qDebug() << "Wykonuję zapytanie SQL...";
+    if (!query.exec()) {
+        qDebug() << "Błąd wykonania zapytania: " << query.lastError().text();
+        return;
+    }
+
+    qDebug() << "Dane zostały zapisane!";
 }
 
 
+QString Dialog::ListaNaString(const QList<int> &lista) {
+    QStringList stringElements;
+
+    // Konwertuj elementy QList<int> na QString i przechowaj w QStringList
+    std::transform(lista.begin(), lista.end(), std::back_inserter(stringElements),
+                   [](int liczba) { return QString::number(liczba); });
+
+    // Połącz elementy w jeden ciąg znaków
+    return stringElements.join("");
+}
+
 QString Dialog::getFilePath(QString Folder, QString Plik) {
     QDir currentDir = QDir::current();
+
 
     QString folderPath = currentDir.filePath(Folder);
 
