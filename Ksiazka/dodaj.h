@@ -30,20 +30,24 @@ private slots:
     void stworz_checkbox(QStringList nazwa,QList<int> *index, float x, float y);
     int checkTrue(int value);
     void zatwierdz_clicked();
-    QString getFilePath(QString Folder, QString Plik);
+    QString getBaza(QString Plik);
     QString ListaNaString(const QList<int> &lista);
+    void dodatkowe(QString skladnik);
 
 private:
     Ui::Dialog *ui;
     QLineEdit *nazwa;
     QTextEdit *opis;
+    QTextEdit *przepis;
     QLineEdit *dodatkowe_skladniki;
     QLabel *label_opis;
+    QLabel *label_przepis;
     QLabel *label_nazwa;
     QLabel *label_rodzaj;
     QLabel *label_inne;
     QLabel *label_skladniki;
     QLabel *label_dodatkowe_skladniki;
+    QTextEdit* label_lista_dodatkowe;
 };
 
 extern QList<int> sql_rodzaj;

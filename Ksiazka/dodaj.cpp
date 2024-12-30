@@ -17,6 +17,7 @@
 #include <QStringList>
 #include <algorithm>
 #include <QSqlDatabase>
+#include <QDebug>
 
 
 QList<int> sql_rodzaj = {0, 0, 0, 0, 0,0};
@@ -38,6 +39,7 @@ QList<int> *wsk_sql_skl_owoce = &sql_skl_owoce;
 QList<int> sql_skl_przyprawy = {0, 0, 0, 0};
 QList<int> *wsk_sql_skl_przyprawy = &sql_skl_przyprawy;
 
+QList<QString> lista_dodatkowe = {};
 
 
 
@@ -46,18 +48,22 @@ Dialog::Dialog(QWidget *parent)
     , ui(new Ui::Dialog)
     , nazwa(new QLineEdit(this))
     , opis(new QTextEdit(this))
+    , przepis(new QTextEdit(this))
     , dodatkowe_skladniki(new QLineEdit(this))
     , label_opis(new QLabel(this))
+    , label_przepis(new QLabel(this))
     , label_nazwa(new QLabel(this))
     , label_rodzaj(new QLabel(this))
     , label_inne(new QLabel(this))
     , label_skladniki(new QLabel(this))
     , label_dodatkowe_skladniki(new QLabel(this))
+
 {
     ui->setupUi(this);
 
     nazwa->setPlaceholderText("Wprowadź jednowierszowy tekst...");
     label_nazwa->setText("NAZWA");
+
 
     QStringList lista_rodzaj = {"śniadaniowe", "lunch", "obiadowe","napoje","desery","sosy i dodatki"};
     label_rodzaj->setText("RODZAJ DANIA");
@@ -76,8 +82,11 @@ Dialog::Dialog(QWidget *parent)
     dodatkowe_skladniki->setPlaceholderText("Wprowadź jednowierszowy tekst...");
     label_dodatkowe_skladniki->setText("DODATKOWE SKLADNIKI");
 
+    label_przepis->setText("PROPORCJE SKŁADNIKÓW");
+
     opis->setPlaceholderText("Wprowadź wielowierszowy opis...");
     label_opis->setText("PRZYGOTOWANIE PRZEPISU");
+
 
     //rozstawienie
 
@@ -103,6 +112,7 @@ Dialog::Dialog(QWidget *parent)
     stworz_checkbox(lista_owoce, wsk_sql_skl_owoce, 10,390);
     stworz_checkbox(lista_nabial, wsk_sql_skl_nabial, 10,450);
     stworz_checkbox(lista_przyprawy, wsk_sql_skl_przyprawy, 10,480);
+
     label_skladniki->setFixedSize(450, 10);
     label_skladniki->move(10,250);
 
@@ -114,11 +124,42 @@ Dialog::Dialog(QWidget *parent)
     label_dodatkowe_skladniki->setFixedSize(450, 10);
     label_dodatkowe_skladniki->move(10,520);
 
-    opis->setFixedSize(450,650);
-    opis->move(520,60);
+    label_lista_dodatkowe = new QTextEdit(this);
+    label_lista_dodatkowe->setReadOnly(true);
+    label_lista_dodatkowe->setFixedSize(450, 100);
+    label_lista_dodatkowe->setStyleSheet("border: 2px solid black; border-radius: 5px;");
+    label_lista_dodatkowe->move(10, 580);
+    label_lista_dodatkowe->update();
+
+
+    QPushButton *guzik_dodatkowe_dodaj = new QPushButton("dodaj", this);
+    QPushButton *guzik_dodatkowe_usun = new QPushButton("usuń",this);
+    guzik_dodatkowe_dodaj->setFixedSize(45,30);
+    guzik_dodatkowe_usun->setFixedSize(45,30);
+    guzik_dodatkowe_dodaj->move(370,540);
+    guzik_dodatkowe_usun->move(425,540);
+    guzik_dodatkowe_dodaj->setObjectName("guzik_dodatkowe_dodaj");
+    guzik_dodatkowe_usun->setObjectName("guzik_dodatkowe_usun");
+    connect(guzik_dodatkowe_dodaj, &QPushButton::clicked, this, [=]() {
+        dodatkowe(dodatkowe_skladniki->text());
+    });
+    connect(guzik_dodatkowe_usun, &QPushButton::clicked, this, [=]() {
+        dodatkowe(dodatkowe_skladniki->text());
+    });
+
+    przepis->setFixedSize(450,120);
+    przepis->move(520,60);
+    przepis->setStyleSheet("border: 2px solid black; border-radius: 5px;");
+
+    label_przepis->setFixedSize(450, 10);
+    label_przepis->move(520, 40);
+
+    opis->setFixedSize(450,450);
+    opis->move(520,230);
+    opis->setStyleSheet("border: 2px solid black; border-radius: 5px;");
 
     label_opis->setFixedSize(450, 10);
-    label_opis->move(520, 40);
+    label_opis->move(520,210);
 
     ui->powrot->setFixedSize(80,24);
     ui->powrot->move(890,740);
@@ -127,9 +168,9 @@ Dialog::Dialog(QWidget *parent)
 
     connect(ui->powrot, &QPushButton::clicked, this, &Dialog::close_window);
 
-    qDebug()<<"!!!app path"<<qApp->applicationDirPath();
+    //qDebug()<<"!!!app path"<<qApp->applicationDirPath();
 
-    connect(ui->zatwierdz, &QPushButton::clicked, this, zatwierdz_clicked);
+    connect(ui->zatwierdz, &QPushButton::clicked, this, &Dialog::zatwierdz_clicked);
 
 }
 
@@ -196,7 +237,7 @@ void Dialog::zatwierdz_clicked() {
 
     //SQL
     QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
-    QString sciezka_przepisy = getFilePath("bazy", "przepisy.db");
+    QString sciezka_przepisy = getBaza("przepisy.db");
     qDebug() << "{{ŚCIEŻKA}}  " << sciezka_przepisy;
     baza_przepisy.setDatabaseName(sciezka_przepisy);
     if(baza_przepisy.open()) {
@@ -211,8 +252,8 @@ void Dialog::zatwierdz_clicked() {
 
     if (!query.prepare(R"(
         INSERT INTO przepisy
-        (Nazwa, Rodzaj, inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis)
-        VALUES (:Nazwa, :Rodzaj, :inne, :bialko, :baza, :warzywa, :owoce, :nabial, :przyprawy, :opis)
+        (Nazwa, Rodzaj, inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis, dodatkowe, przygotowanie)
+        VALUES (:Nazwa, :Rodzaj, :inne, :bialko, :baza, :warzywa, :owoce, :nabial, :przyprawy, :opis, :dodatkowe, :przygotowanie)
     )")) {
         qDebug() << "Błąd przygotowania zapytania: " << query.lastError().text();
         return;
@@ -228,12 +269,21 @@ void Dialog::zatwierdz_clicked() {
     query.bindValue(":nabial", ListaNaString(sql_skl_nabial));
     query.bindValue(":przyprawy", ListaNaString(sql_skl_przyprawy));
     query.bindValue(":opis", opis->toPlainText());
+    query.bindValue(":dodatkowe", lista_dodatkowe.join(";"));
+    query.bindValue(":przygotowanie", przepis->toPlainText());
 
     qDebug() << "Wykonuję zapytanie SQL...";
     if (!query.exec()) {
         qDebug() << "Błąd wykonania zapytania: " << query.lastError().text();
         return;
     }
+
+    nazwa->clear();
+    lista_dodatkowe = {};
+    label_lista_dodatkowe->clear();
+    opis->clear();
+    przepis->clear();
+
 
     qDebug() << "Dane zostały zapisane!";
 }
@@ -250,31 +300,55 @@ QString Dialog::ListaNaString(const QList<int> &lista) {
     return stringElements.join("");
 }
 
-QString Dialog::getFilePath(QString Folder, QString Plik) {
+QString Dialog::getBaza(QString Plik) {
     QDir currentDir = QDir::current();
+    // Zamień wszystkie ukośniki na odwrotne ukośniki
+    QString zmienionaSciezka = currentDir.absolutePath();
+    zmienionaSciezka.replace("/", "\\");
 
-
-    QString folderPath = currentDir.filePath(Folder);
-
-
-    if (!QDir(folderPath).exists()) {
-        if (!currentDir.mkpath(Folder)) {
-            qDebug() << "[-] Błąd tworzenia folderu:" << folderPath;
-            return QString(); // Zwróć pustą ścieżkę w razie błędu
-        }
+    // Usuń część od "build" do końca ścieżki
+    int buildIndex = zmienionaSciezka.indexOf("\\build");
+    if (buildIndex != -1) {
+        zmienionaSciezka = zmienionaSciezka.left(buildIndex);
     }
 
-    // Twórz pełną ścieżkę do pliku
-    QString filePath = QDir(folderPath).filePath(Plik);
-
-    qDebug() << "[i] Ścieżka do pliku:" << filePath;
-    return filePath;
+    // Dodaj brakujące podfoldery
+    zmienionaSciezka.append("\\bazy\\");
+    zmienionaSciezka.append(Plik);
+    return zmienionaSciezka;
 }
 
-// Qquery qry;
-// qry.prepare("    komenda   nazwa (kolumny)     (:zmienna )   ")
-// qry.bind(" :zmienna ",zmienna)
+void Dialog::dodatkowe(QString skladnik) {
+    // Sprawdź, który przycisk wywołał akcję
+    QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
+    if (clickedButton) {
+        if (clickedButton->objectName() == "guzik_dodatkowe_dodaj") {
+            qDebug() << "Kliknięto przycisk 'dodaj'  ";
+            if (!lista_dodatkowe.contains(skladnik)) {
+                lista_dodatkowe.append(skladnik);
+                qDebug() << "Dodano składnik:" << skladnik;
+            } else {
+                qDebug() << "Składnik już istnieje w liście:" << skladnik;
+            }
 
-// qry.exec()
+        } else if (clickedButton->objectName() == "guzik_dodatkowe_usun") {
+            qDebug() << "Kliknięto przycisk 'usun'";
+            if (lista_dodatkowe.contains(skladnik)) {
+                lista_dodatkowe.removeAll(skladnik);
+                qDebug() << "Usunięto składnik:" << skladnik;
+            } else {
+                qDebug() << "Nie znaleziono składnika w liście:" << skladnik;
+            }
 
+        }
+    }
+    dodatkowe_skladniki->clear();
+    QString zawartoscListy = lista_dodatkowe.join(" ");
+    label_lista_dodatkowe->setText(zawartoscListy);
+    QString testListy = lista_dodatkowe.join(";");
+    qDebug()<<"Lista do bazy: "<<testListy;
+
+
+
+}
 

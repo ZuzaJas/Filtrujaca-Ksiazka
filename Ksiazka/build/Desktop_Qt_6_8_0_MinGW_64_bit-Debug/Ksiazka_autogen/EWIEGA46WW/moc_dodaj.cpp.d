@@ -1,5 +1,5 @@
-C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_dodaj.cpp: C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/dodaj.h \
-  C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
+C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/EWIEGA46WW/moc_dodaj.cpp: C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/dodaj.h \
+  C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/Ksiazka_autogen/moc_predefs.h \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.8.0/mingw_64/include/QtCore/QStringList \
   C:/Qt/6.8.0/mingw_64/include/QtCore/q20functional.h \
