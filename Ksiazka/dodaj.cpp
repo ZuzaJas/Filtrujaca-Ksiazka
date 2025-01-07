@@ -14,7 +14,6 @@
 #include <QtMath>
 #include <QDir>
 #include <QString>
-#include <QStringList>
 #include <algorithm>
 #include <QSqlDatabase>
 #include <QDebug>
@@ -286,6 +285,8 @@ void Dialog::zatwierdz_clicked() {
 
 
     qDebug() << "Dane zostały zapisane!";
+    baza_przepisy.close();
+    qDebug() << "Baza zamknięta!";
 }
 
 

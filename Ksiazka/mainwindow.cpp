@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "dodaj.h"
+#include "wyszukiwanie.h"
+
 
 #include <QPixmap>
 #include <QCoreApplication>
@@ -9,20 +11,19 @@
 #include <QTextStream>
 #include <QDir>
 #include <QString>
+#include <QList>
+#include <QStringList>
+#include <QCheckBox>
+
 
 
 //zmienne skladniki
 ///
 
-QStringList lista_skladniki = {
-    "wolowe","ryba","jajko","kurczak",
-    "makaron", "ryz", "pieczywo", "maka",
-    "marchew", "cebula","ogorek", "papryka", "pomidor", "ziemniak",
-    "banan","cytryna","jablko","malina","pomarancza","truskawka",
-    "mleko", "ser","smietana", "jogurt",
-    "cynamon","tymianek","galka_muszkatowa","kminek"
-};
-QList<int> index_skladniki(lista_skladniki.size(), 0);
+
+
+
+
 
 
 // Funkcja do wyświetlania komunikatu w terminalu
@@ -48,205 +49,318 @@ MainWindow::MainWindow(QWidget *parent)
     //wolowe
     QPushButton *wolowe = new QPushButton("Wołowe", this);
     wolowe->setGeometry(520, 60, 80, 20);
-    connect(wolowe, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(wolowe, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_bialko, Widx_bialko);
+    });
     wolowe->setObjectName("wolowe");
 
     //ryba
     QPushButton *ryba = new QPushButton("Ryba", this);
     ryba->setGeometry(650, 60, 80, 20);
-    connect(ryba, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(ryba, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_bialko, Widx_bialko);
+    });
     ryba->setObjectName("ryba");
 
     //jajko
     QPushButton *jajko = new QPushButton("Jajko", this);
     jajko->setGeometry(770, 60, 80, 20);
-    connect(jajko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(jajko, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_bialko, Widx_bialko);
+    });
     jajko->setObjectName("jajko");
 
     //kurczak
     QPushButton *kurczak = new QPushButton("Kurczak", this);
     kurczak->setGeometry(900, 60, 80, 20);
-    connect(kurczak, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(kurczak, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_bialko, Widx_bialko);
+    });
     kurczak->setObjectName("kurczak");
 
     //makaron
     QPushButton *makaron = new QPushButton("Makaron", this);
     makaron->setGeometry(520, 160, 80, 20);
-    connect(makaron, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(makaron, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_baza, Widx_baza);
+    });
     makaron->setObjectName("makaron");
 
     //ryz
     QPushButton *ryz = new QPushButton("Ryż", this);
     ryz->setGeometry(650, 160, 80, 20);
-    connect(ryz, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(ryz, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_baza, Widx_baza);
+    });
     ryz->setObjectName("ryz");
 
     //pieczywo
     QPushButton *pieczywo = new QPushButton("Pieczywo", this);
     pieczywo->setGeometry(770, 160, 80, 20);
-    connect(pieczywo, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(pieczywo, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_baza, Widx_baza);
+    });
     pieczywo->setObjectName("pieczywo");
 
     //mąka
     QPushButton *maka = new QPushButton("Mąka", this);
     maka->setGeometry(900, 160, 80, 20);
-    connect(maka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(maka, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_baza, Widx_baza);
+    });
     maka->setObjectName("maka");
 
     //marchew
     QPushButton *marchew = new QPushButton("Marchew", this);
     marchew->setGeometry(520, 260, 80, 20);
-    connect(marchew, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(marchew, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     marchew->setObjectName("marchew");
 
     //cebula
     QPushButton *cebula = new QPushButton("Cebula", this);
     cebula->setGeometry(710, 260, 80, 20);
-    connect(cebula, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(cebula, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     cebula->setObjectName("cebula");
 
     //ogorek
     QPushButton *ogorek = new QPushButton("Ogorek", this);
     ogorek->setGeometry(900, 260, 80, 20);
-    connect(ogorek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(ogorek, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     ogorek->setObjectName("ogorek");
 
     //papryka
     QPushButton *papryka = new QPushButton("Papryka", this);
     papryka->setGeometry(520, 290, 80, 20);
-    connect(papryka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(papryka, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     papryka->setObjectName("papryka");
 
     //pomidor
     QPushButton *pomidor = new QPushButton("Pomidor", this);
     pomidor->setGeometry(710, 290, 80, 20);
-    connect(pomidor, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(pomidor, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     pomidor->setObjectName("pomidor");
 
     //ziemniak
     QPushButton *ziemniak = new QPushButton("Ziemniak", this);
     ziemniak->setGeometry(900, 290, 80, 20);
-    connect(ziemniak, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(ziemniak, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_warzywa, Widx_warzywa);
+    });
     ziemniak->setObjectName("ziemniak");
 
     //banan
     QPushButton *banan = new QPushButton("Banan", this);
     banan->setGeometry(520, 370, 80, 20);
-    connect(banan, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(banan, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     banan->setObjectName("banan");
 
     //cytryna
     QPushButton *cytryna = new QPushButton("Cytryna", this);
     cytryna->setGeometry(710, 370, 80, 20);
-    connect(cytryna, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(cytryna, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     cytryna->setObjectName("cytryna");
 
     //jablko
     QPushButton *jablko = new QPushButton("Jablko", this);
     jablko->setGeometry(900, 370, 80, 20);
-    connect(jablko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(jablko, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     jablko->setObjectName("jablko");
 
     //malina
     QPushButton *malina = new QPushButton("Malina", this);
     malina->setGeometry(520, 400, 80, 20);
-    connect(malina, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(malina, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     malina->setObjectName("malina");
 
     //pomarancza
     QPushButton *pomarancza = new QPushButton("Pomarancza", this);
     pomarancza->setGeometry(710, 400, 80, 20);
-    connect(pomarancza, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(pomarancza, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     pomarancza->setObjectName("pomarancza");
 
     //truskawka
     QPushButton *truskawka = new QPushButton("Truskawka", this);
     truskawka->setGeometry(900, 400, 80, 20);
-    connect(truskawka, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(truskawka, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_owoce, Widx_owoce);
+    });
     truskawka->setObjectName("truskawka");
 
 
     //mleko
     QPushButton *mleko = new QPushButton("Mleko", this);
     mleko->setGeometry(520, 520, 80, 20);
-    connect(mleko, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(mleko, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_nabial, Widx_nabial);
+    });
     mleko->setObjectName("mleko");
 
     //ser
     QPushButton *ser = new QPushButton("Ser", this);
     ser->setGeometry(650, 520, 80, 20);
-    connect(ser, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(ser, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_nabial, Widx_nabial);
+    });
     ser->setObjectName("ser");
 
     //smietana
     QPushButton *smietana = new QPushButton("Śmietana", this);
     smietana->setGeometry(770, 520, 80, 20);
-    connect(smietana, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(smietana, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_nabial, Widx_nabial);
+    });
     smietana->setObjectName("smietana");
 
     //jogurt
     QPushButton *jogurt = new QPushButton("Jogurt", this);
     jogurt->setGeometry(900, 520, 80, 20);
-    connect(jogurt, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(jogurt, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_nabial, Widx_nabial);
+    });
     jogurt->setObjectName("jogurt");
 
     //cynamon
     QPushButton *cynamon = new QPushButton("Cynamon", this);
     cynamon->setGeometry(520, 620, 80, 20);
-    connect(cynamon, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(cynamon, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_przyprawy, Widx_przyprawy);
+    });
     cynamon->setObjectName("cynamon");
 
     //tymianek
     QPushButton *tymianek = new QPushButton("Tymianek", this);
     tymianek->setGeometry(650, 620, 80, 20);
-    connect(tymianek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(tymianek, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_przyprawy, Widx_przyprawy);
+    });
     tymianek->setObjectName("tymianek");
 
     //galka_muszkatowa
     QPushButton *galka_muszkatowa = new QPushButton("Gałka Muszk.", this);
     galka_muszkatowa->setGeometry(770, 620, 80, 20);
-    connect(galka_muszkatowa, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(galka_muszkatowa, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_przyprawy, Widx_przyprawy);
+    });
     galka_muszkatowa->setObjectName("galka_muszkatowa");
 
     //kminek
     QPushButton *kminek = new QPushButton("Kminek", this);
     kminek->setGeometry(900, 620, 80, 20);
-    connect(kminek, &QPushButton::clicked, this, &MainWindow::skladnik_clicked);
+    connect(kminek, &QPushButton::clicked, this, [this]() {
+        skladnik_clicked(lista_przyprawy, Widx_przyprawy);
+    });
     kminek->setObjectName("kminek");
+
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    QCheckBox *sniadaniowe = new QCheckBox("Śniadaniowe", this);
+    sniadaniowe->setGeometry(20, 160, 150, 20);
+    connect(sniadaniowe, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    sniadaniowe->setObjectName("sniadaniowe");
+
+    QCheckBox *lunch = new QCheckBox("Lunch", this);
+    lunch->setGeometry(210, 160, 150, 20);
+    connect(lunch, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    lunch->setObjectName("lunch");
+
+    QCheckBox *obiadowe = new QCheckBox("Obiadowe", this);
+    obiadowe->setGeometry(400, 160, 150, 20);
+    connect(obiadowe, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    obiadowe->setObjectName("obiadowe");
+
+    QCheckBox *napoje = new QCheckBox("Napoje", this);
+    napoje->setGeometry(20, 180, 150, 20);
+    connect(napoje, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    napoje->setObjectName("napoje");
+
+    QCheckBox *desery = new QCheckBox("Desery", this);
+    desery->setGeometry(210, 180, 150, 20);
+    connect(desery, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    desery->setObjectName("desery");
+
+    QCheckBox *sosy = new QCheckBox("Sosy i dodatki", this);
+    sosy->setGeometry(400, 180, 150, 20);
+    connect(sosy, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_rodzaje, Widx_rodzaj);
+    });
+    sosy->setObjectName("sosy i dodatki");
+
+    QCheckBox *wege = new QCheckBox("Wegetariańskie", this);
+    wege->setGeometry(20, 260, 150, 20);
+    connect(wege, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_inne, Widx_inne);
+    });
+    wege->setObjectName("wegetarianskie");
+
+    QCheckBox *ostre = new QCheckBox("Ostre", this);
+    ostre->setGeometry(400, 260, 150, 20);
+    connect(ostre, &QCheckBox::toggled, this, [this]() {
+        skladnik_clicked_2(lista_inne, Widx_inne);
+    });
+    ostre->setObjectName("ostre");
+
+
+
+    QPushButton *szukaj = new QPushButton("szukaj", this);
+    szukaj->setGeometry(900, 720, 80, 20);
+    connect(szukaj, &QPushButton::clicked, this, &MainWindow::wyszukaj_clicked);
+    szukaj->setObjectName("Szukaj");
 
     //nowe okna
     connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
-    QDir currentDir = QDir::current();
-    qDebug() <<"Current" <<currentDir;
-    QString filePath = QDir(currentDir).filePath("Miku_teto_kitchen.png");
-    qDebug() << "ścieżka"<<filePath;
-    QPixmap pix("C:\\Users\\suzzi\\OneDrive\\Dokumenty\\GitHub\\Filtrujaca-Ksiazka\\Ksiazka\\Miku_teto_kitchen.png");
-    int pix_h = ui->zdjecie->height();
-    int pix_w = ui->zdjecie->width();
-    ui->zdjecie->setPixmap(pix.scaled(pix_w,pix_h,Qt::KeepAspectRatio));
-    listWidget = new QListWidget(this);
+
+    //listWidget = new QListWidget(this);
 
     // Dodanie przykładowych elementów do listy
-    for (int i = 1; i <= 100; i++) {
-        listWidget->addItem("Element " + QString::number(i));
-    }
+    //for (int i = 1; i <= 100; i++) {
+     //   listWidget->addItem("Element " + QString::number(i));
+    //}
 
     // Ustawienie początkowej geometrii listy i dodanie jej do głównego okna
-    listWidget->setGeometry(10, 10, 200, 300);
-    listWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
+    //listWidget->setGeometry(10, 10, 200, 300);
+    //listWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
 
     // Tworzenie suwaka (QSlider) do sterowania przewijaniem listy
-    slider = new QSlider(Qt::Horizontal, this);
-    slider->setGeometry(220, 10, 30, 300);
-    slider->setRange(0, listWidget->count() - 1); // zakres odpowiada liczbie elementów na liście
+    //slider = new QSlider(Qt::Horizontal, this);
+    //slider->setGeometry(220, 10, 30, 300);
+    //->setRange(0, listWidget->count() - 1); // zakres odpowiada liczbie elementów na liście
 
     // Łączenie suwaka z listą, aby przewijać do wybranego elementu
-    connect(slider, &QSlider::valueChanged, this, [this](int value) {
-        listWidget->scrollToItem(listWidget->item(value));
-    });
+    //connect(slider, &QSlider::valueChanged, this, [this](int value) {
+    //    listWidget->scrollToItem(listWidget->item(value));
+    //});
+
 
 
 }
@@ -274,22 +388,35 @@ void MainWindow::nowe_okno_clicked()
 }
 
 
-void MainWindow::skladnik_clicked()
+void MainWindow::wyszukaj_clicked() {
+    close(); // Zamykamy MainWindow
+
+    // Tworzymy dialog wyszukiwania i przekazujemy dane
+    wyszukiwanie dialog(idx_rodzaj,idx_inne,idx_bialko,idx_nabial,idx_baza,idx_warzywa,idx_owoce,idx_przyprawy ,this);
+
+    // Ustawiamy modalność i uruchamiamy dialog
+    dialog.setModal(true);
+    dialog.exec();
+}
+
+
+void MainWindow::skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista)
 {
     QPushButton *button = qobject_cast<QPushButton *>(sender());
     QString wyraz_id = button->objectName();
-    int index = lista_skladniki.indexOf(wyraz_id);
+    int index = skladniki_lista.indexOf(wyraz_id);
     if (button) {
         if (index != -1) {
-            if(index_skladniki[index] == 1)
+            if((*idx_lista)[index] == 1)
             {
-                index_skladniki[index] = 0;
+                (*idx_lista)[index] = 0;
                 button->setStyleSheet("color: black;");
             }else{
-                index_skladniki[index] = 1;
+                (*idx_lista)[index] = 1;
                 button->setStyleSheet("color: rgb(50, 205, 50);");
             }
-            qDebug() << "Index List:" << index_skladniki[index];
+            qDebug() << "Index List:" << (*idx_lista)[index];
+            qDebug() << "Zawartość lista string "<<skladniki_lista;
 
         } else {
             qDebug() << "Nie znaleziono";
@@ -300,6 +427,32 @@ void MainWindow::skladnik_clicked()
     }
 }
 
+void MainWindow::skladnik_clicked_2(QStringList skladniki_lista, QList<int> *idx_lista)
+{
+    QCheckBox *button = qobject_cast<QCheckBox *>(sender());
+    QString wyraz_id = button->objectName();
+    int index = skladniki_lista.indexOf(wyraz_id);
+    if (button) {
+        if (index != -1) {
+            if((*idx_lista)[index] == 1)
+            {
+                (*idx_lista)[index] = 0;
+                button->setStyleSheet("color: black;");
+            }else{
+                (*idx_lista)[index] = 1;
+                button->setStyleSheet("color: rgb(50, 205, 50);");
+            }
+            qDebug() << "Index List:" << (*idx_lista)[index];
+            qDebug() << "Zawartość lista string "<<skladniki_lista;
+
+        } else {
+            qDebug() << "Nie znaleziono";
+        }
+        qDebug() << "Index:" << index;
+
+
+    }
+}
 
 
 

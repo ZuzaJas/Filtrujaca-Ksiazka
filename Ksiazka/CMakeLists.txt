@@ -24,6 +24,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         dodaj.h dodaj.cpp dodaj.ui
+        wyszukiwanie.h wyszukiwanie.cpp wyszukiwanie.ui
+        karta.h karta.cpp karta.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Ksiazka APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
