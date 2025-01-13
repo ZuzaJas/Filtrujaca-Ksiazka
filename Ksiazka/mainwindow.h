@@ -58,6 +58,7 @@ private slots:
     void skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista);
     void skladnik_clicked_2(QStringList skladniki_lista, QList<int> *idx_lista);
     void wyszukaj_clicked();
+    void stworz_guzik(QStringList nazwa, QList<int> *index, float x, float y);
 
 private:
     Ui::MainWindow *ui;

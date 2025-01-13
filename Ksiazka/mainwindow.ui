@@ -54,7 +54,7 @@
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="nowe_okno">
+   <widget class="QPushButton" name="okno_dodaj">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -64,7 +64,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Nowe Okno</string>
+     <string>DODAJ</string>
     </property>
    </widget>
   </widget>
@@ -75,7 +75,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

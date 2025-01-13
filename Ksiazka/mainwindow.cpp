@@ -46,69 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 //---------------GUZIKI---------------------------------------------------------------------------------------------------------------------------------
 
-    //wolowe
-    QPushButton *wolowe = new QPushButton("Wołowe", this);
-    wolowe->setGeometry(520, 60, 80, 20);
-    connect(wolowe, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_bialko, Widx_bialko);
-    });
-    wolowe->setObjectName("wolowe");
 
-    //ryba
-    QPushButton *ryba = new QPushButton("Ryba", this);
-    ryba->setGeometry(650, 60, 80, 20);
-    connect(ryba, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_bialko, Widx_bialko);
-    });
-    ryba->setObjectName("ryba");
+    stworz_guzik(lista_bialko, Widx_bialko, 520, 60);
 
-    //jajko
-    QPushButton *jajko = new QPushButton("Jajko", this);
-    jajko->setGeometry(770, 60, 80, 20);
-    connect(jajko, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_bialko, Widx_bialko);
-    });
-    jajko->setObjectName("jajko");
-
-    //kurczak
-    QPushButton *kurczak = new QPushButton("Kurczak", this);
-    kurczak->setGeometry(900, 60, 80, 20);
-    connect(kurczak, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_bialko, Widx_bialko);
-    });
-    kurczak->setObjectName("kurczak");
-
-    //makaron
-    QPushButton *makaron = new QPushButton("Makaron", this);
-    makaron->setGeometry(520, 160, 80, 20);
-    connect(makaron, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_baza, Widx_baza);
-    });
-    makaron->setObjectName("makaron");
-
-    //ryz
-    QPushButton *ryz = new QPushButton("Ryż", this);
-    ryz->setGeometry(650, 160, 80, 20);
-    connect(ryz, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_baza, Widx_baza);
-    });
-    ryz->setObjectName("ryz");
-
-    //pieczywo
-    QPushButton *pieczywo = new QPushButton("Pieczywo", this);
-    pieczywo->setGeometry(770, 160, 80, 20);
-    connect(pieczywo, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_baza, Widx_baza);
-    });
-    pieczywo->setObjectName("pieczywo");
-
-    //mąka
-    QPushButton *maka = new QPushButton("Mąka", this);
-    maka->setGeometry(900, 160, 80, 20);
-    connect(maka, &QPushButton::clicked, this, [this]() {
-        skladnik_clicked(lista_baza, Widx_baza);
-    });
-    maka->setObjectName("maka");
+    stworze_guzik(lista_baza, Widx_baza, 520, 160);
 
     //marchew
     QPushButton *marchew = new QPushButton("Marchew", this);
@@ -338,7 +279,7 @@ MainWindow::MainWindow(QWidget *parent)
     szukaj->setObjectName("Szukaj");
 
     //nowe okna
-    connect(ui->nowe_okno, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
+    connect(ui->okno_dodaj, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
 
     //listWidget = new QListWidget(this);
 
@@ -454,5 +395,36 @@ void MainWindow::skladnik_clicked_2(QStringList skladniki_lista, QList<int> *idx
     }
 }
 
+void MainWindow::stworz_guzik(QStringList nazwa, QList<int> *index, float x, float y) {
+    int liczbaElementow = nazwa.size();
+    int elementyNaRzad = liczbaElementow <= 4 ? liczbaElementow : (liczbaElementow <= 6 ? 3 : qCeil(liczbaElementow / 2.0)); // Maksymalnie 3–6 w rzędzie
+    float rzadOffset = 30;  // Odstęp między rzędami
+    float kolumnaOffset = ((500 / elementyNaRzad)); // Dynamiczny odstęp w poziomie
+
+    for (int i = 0; i < liczbaElementow; ++i) {
+        //qDebug() << "Tworzenie checkboxa: " << nazwa[i];
+
+        QPushButton *button = new QPushButton(nazwa[i], this);
+
+        // Obliczanie pozycji checkboxa w rzędach
+        int rzad = i / elementyNaRzad;  // Indeks rzędu
+        int kolumna = i % elementyNaRzad; // Indeks w rzędzie
+        qDebug()<<"i="<<i<<",element na rząd="<<elementyNaRzad<<"kolumna"<<kolumna;
+
+        float xPos = x + (kolumna * kolumnaOffset);
+        float yPos = y + rzad * rzadOffset;
+        qDebug()<<"float pos x"<<kolumna * kolumnaOffset;
+
+
+        button->setGeometry(xPos, yPos, 80, 20);
+        button->setObjectName(nazwa[i]);
+        qDebug()<<"Guzik ["<<nazwa[i]<<"] Pozycja["<<xPos<<","<<yPos<<"]";
+
+        // Obsługa zdarzenia
+        connect(button, &QPushButton::clicked, this, [this, nazwa, index] {
+            skladnik_clicked(nazwa, index);
+        });
+    }
+}
 
 

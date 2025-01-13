@@ -1,0 +1,9 @@
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/Ksiazka.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/edit_cache.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/rebuild_cache.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/list_install_components.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/install.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/install/local.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/install/strip.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/Ksiazka_autogen_timestamp_deps.dir
+C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/CMakeFiles/Ksiazka_autogen.dir

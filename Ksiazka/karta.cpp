@@ -31,9 +31,9 @@ karta::karta(QString nazwa, QWidget *parent)
     qDebug()<<"!!!"<<dane[0];
     resize(900,900);
     QLabel *label_nazwa = new QLabel(this);
-    label_nazwa->setGeometry(10,10,880,40);
+    label_nazwa->setGeometry(10,10,880,45);
     label_nazwa->setText(dane[0]);
-    setStyleSheet(
+    label_nazwa->setStyleSheet(
         "QLabel "
         "{"
         "font: 40px;"
@@ -41,6 +41,55 @@ karta::karta(QString nazwa, QWidget *parent)
         "}");
     label_nazwa->setAlignment(Qt::AlignCenter);
     label_nazwa->show();
+
+    QLabel *label_skladnikiCON = new QLabel(this);
+    label_skladnikiCON-> setGeometry(10,60,880,20);
+    label_skladnikiCON->setText("Składniki: ");
+    label_skladnikiCON->setStyleSheet(
+        "QLabel "
+        "{"
+        "font: 20px;"
+        "font-family: 'Dancing Script', cursive;"
+        "}");
+    label_skladnikiCON->show();
+
+    QLabel *label_skladniki = new QLabel(this);
+    label_skladniki-> setGeometry(10,90,880,20);
+    label_skladniki->setText(dane[1]);
+    label_skladniki->setStyleSheet(
+        "QLabel "
+        "{"
+        "font: 16px;"
+        "font-family: 'Dancing Script', cursive;"
+        "}");
+    label_skladniki->setAlignment(Qt::AlignJustify);
+    label_skladniki->show();
+
+    QLabel *label_przygotowanieCON = new QLabel(this);
+    label_przygotowanieCON-> setGeometry(10,130,880,25);
+    label_przygotowanieCON->setText("Przygotowanie: ");
+    label_przygotowanieCON->setStyleSheet(
+        "QLabel "
+        "{"
+        "font: 20px;"
+        "font-family: 'Dancing Script', cursive;"
+        "}");
+    label_przygotowanieCON->show();
+
+    QLabel *label_przygotowanie = new QLabel(this);
+    label_przygotowanie-> setGeometry(10,165,880,300);
+    label_przygotowanie->setText(dane[2]);
+    label_przygotowanie->setStyleSheet(
+        "QLabel "
+        "{"
+        "font: 16px;"
+        "font-family: 'Dancing Script', cursive;"
+        "}");
+    label_przygotowanie->setAlignment(Qt::AlignJustify);
+    label_przygotowanie->setWordWrap(true);
+    label_przygotowanie->show();
+
+
 }
 
 karta::~karta()
