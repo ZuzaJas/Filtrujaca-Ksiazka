@@ -43,8 +43,13 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "skladniki_lista",
     "QList<int>*",
     "idx_lista",
-    "skladnik_clicked_2",
-    "wyszukaj_clicked"
+    "wyszukaj_clicked",
+    "stworz_guzik",
+    "nazwa",
+    "index",
+    "x",
+    "float*",
+    "y"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -67,14 +72,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
        1,    0,   38,    2, 0x08,    1 /* Private */,
        3,    2,   39,    2, 0x08,    2 /* Private */,
-       7,    2,   44,    2, 0x08,    5 /* Private */,
-       8,    0,   49,    2, 0x08,    8 /* Private */,
+       7,    0,   44,    2, 0x08,    5 /* Private */,
+       8,    4,   45,    2, 0x08,    6 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QStringList, 0x80000000 | 5,    4,    6,
-    QMetaType::Void, QMetaType::QStringList, 0x80000000 | 5,    4,    6,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QStringList, 0x80000000 | 5, QMetaType::Float, 0x80000000 | 12,    9,   10,   11,   13,
 
        0        // eod
 };
@@ -94,12 +99,14 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         QtPrivate::TypeAndForceComplete<QList<int> *, std::false_type>,
-        // method 'skladnik_clicked_2'
+        // method 'wyszukaj_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'stworz_guzik'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         QtPrivate::TypeAndForceComplete<QList<int> *, std::false_type>,
-        // method 'wyszukaj_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float *, std::false_type>
     >,
     nullptr
 } };
@@ -112,8 +119,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->nowe_okno_clicked(); break;
         case 1: _t->skladnik_clicked((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<int>*>>(_a[2]))); break;
-        case 2: _t->skladnik_clicked_2((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<int>*>>(_a[2]))); break;
-        case 3: _t->wyszukaj_clicked(); break;
+        case 2: _t->wyszukaj_clicked(); break;
+        case 3: _t->stworz_guzik((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<int>*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<float*>>(_a[4]))); break;
         default: ;
         }
     }

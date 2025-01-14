@@ -22,7 +22,7 @@ class Dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog(QWidget *parent = nullptr);
+    explicit Dialog(QString rodzaj,QWidget *parent = nullptr);
     ~Dialog();
 
 private slots:

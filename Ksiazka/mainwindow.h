@@ -56,9 +56,8 @@ public:
 private slots:
     void nowe_okno_clicked();
     void skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista);
-    void skladnik_clicked_2(QStringList skladniki_lista, QList<int> *idx_lista);
     void wyszukaj_clicked();
-    void stworz_guzik(QStringList nazwa, QList<int> *index, float x, float y);
+    void stworz_guzik(QStringList nazwa, QList<int> *index, float x, float *y);
 
 private:
     Ui::MainWindow *ui;
@@ -67,13 +66,13 @@ private:
 
     //skladniki - dane do zczytania w bazie danych
     QStringList lista_rodzaje = {"sniadaniowe", "lunch", "obiadowe","napoje","desery","sosy i dodatki"};
-    QStringList lista_inne = {"wegetarianskie", "ostre"};
+    QStringList lista_inne = {"wege", "ostre"};
     QStringList lista_bialko = {"wolowe","ryba","jajko","kurczak"};
     QStringList lista_nabial = { "mleko", "ser","smietana", "jogurt"};
     QStringList lista_baza = {"makaron", "ryz", "pieczywo", "maka"};
     QStringList lista_warzywa = {"marchew", "cebula","ogorek", "papryka", "pomidor", "ziemniak"};
     QStringList lista_owoce = { "banan","cytryna","jablko","malina","pomarancza","truskawka"};
-    QStringList lista_przyprawy = {"cynamon","tymianek","galka_muszkatowa","kminek"};
+    QStringList lista_przyprawy = {"cynamon","tymianek","galka_muszk.","kminek"};
 
 
 

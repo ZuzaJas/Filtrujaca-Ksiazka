@@ -42,7 +42,7 @@ QList<QString> lista_dodatkowe = {};
 
 
 
-Dialog::Dialog(QWidget *parent)
+Dialog::Dialog(QString rodzaj,QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
     , nazwa(new QLineEdit(this))

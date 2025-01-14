@@ -14,7 +14,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -25,7 +24,6 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QLabel *label;
-    QPushButton *nowe_okno;
     QStatusBar *statusbar;
     QMenuBar *menubar;
 
@@ -51,9 +49,6 @@ public:
         label->setLineWidth(5);
         label->setTextFormat(Qt::TextFormat::RichText);
         label->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        nowe_okno = new QPushButton(centralwidget);
-        nowe_okno->setObjectName("nowe_okno");
-        nowe_okno->setGeometry(QRect(50, 600, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -72,7 +67,6 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        nowe_okno->setText(QCoreApplication::translate("MainWindow", "Nowe Okno", nullptr));
     } // retranslateUi
 
 };
