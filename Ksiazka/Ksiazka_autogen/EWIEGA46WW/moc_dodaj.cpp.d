@@ -165,15 +165,18 @@ C:/Users/suzzi/OneDrive/Dokumenty/GitHub/Filtrujaca-Ksiazka/Ksiazka/Ksiazka_auto
   C:/Qt/6.8.0/mingw_64/include/QtSql/qtsql-config.h \
   C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlexports.h \
   C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlglobal.h \
+  C:/Qt/6.8.0/mingw_64/include/QtWidgets/QCheckBox \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QComboBox \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QDialog \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QLineEdit \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/QTextEdit \
+  C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractslider.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+  C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcheckbox.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcombobox.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qdialog.h \
   C:/Qt/6.8.0/mingw_64/include/QtWidgets/qframe.h \

@@ -1,6 +1,7 @@
 #include "karta.h"
 #include "ui_karta.h"
 #include "wyszukiwanie.h"
+#include "dodaj.h"
 
 #include <QPushButton>
 #include <QDebug>
@@ -12,26 +13,31 @@
 QStringList dane = {};
 QStringList *Wdane = &dane;
 
-karta::karta(QString nazwa, QWidget *parent)
-    : QDialog(parent), nazwa(nazwa)
+karta::karta(int id, QWidget *parent)
+    : QDialog(parent), id(id)
     , ui(new Ui::karta)
 {
-
-    QPushButton *powrot = new QPushButton("powrot", this);
-    powrot->setGeometry(10, 880, 80, 20);
-    connect(powrot, &QPushButton::clicked, this, &karta::close_window);
-    powrot->setObjectName("Szukaj");
-
-
     ui->setupUi(this);
+
+    QPushButton *powrot = new QPushButton("powrót", this);
+    powrot->setGeometry(10, 10, 80, 20);
+    connect(powrot, &QPushButton::clicked, this, &karta::close_window);
+    powrot->setObjectName("powrót");
+
+    QPushButton *edycja = new QPushButton("edycja", this);
+    edycja->setGeometry(100, 10, 80, 20);
+    connect(edycja, &QPushButton::clicked, this, &karta::open_edycja);
+    edycja->setObjectName("edycja");
+
+
     //odpalanie funkcji---------------------------
     //zebranie danych z bazy o przepisie
-    wyszukaj_w_bazie(nazwa, Wdane);
+    wyszukaj_w_bazie(id, Wdane);
 
     qDebug()<<"!!!"<<dane[0];
     resize(900,900);
     QLabel *label_nazwa = new QLabel(this);
-    label_nazwa->setGeometry(10,10,880,45);
+    label_nazwa->setGeometry(10,30,880,45);
     label_nazwa->setText(dane[0]);
     label_nazwa->setStyleSheet(
         "QLabel "
@@ -43,7 +49,7 @@ karta::karta(QString nazwa, QWidget *parent)
     label_nazwa->show();
 
     QLabel *label_skladnikiCON = new QLabel(this);
-    label_skladnikiCON-> setGeometry(10,60,880,20);
+    label_skladnikiCON-> setGeometry(10,70,880,20);
     label_skladnikiCON->setText("Składniki: ");
     label_skladnikiCON->setStyleSheet(
         "QLabel "
@@ -54,7 +60,7 @@ karta::karta(QString nazwa, QWidget *parent)
     label_skladnikiCON->show();
 
     QLabel *label_skladniki = new QLabel(this);
-    label_skladniki-> setGeometry(10,90,880,20);
+    label_skladniki-> setGeometry(10,100,880,20);
     label_skladniki->setText(dane[1]);
     label_skladniki->setStyleSheet(
         "QLabel "
@@ -66,7 +72,7 @@ karta::karta(QString nazwa, QWidget *parent)
     label_skladniki->show();
 
     QLabel *label_przygotowanieCON = new QLabel(this);
-    label_przygotowanieCON-> setGeometry(10,130,880,25);
+    label_przygotowanieCON-> setGeometry(10,140,880,25);
     label_przygotowanieCON->setText("Przygotowanie: ");
     label_przygotowanieCON->setStyleSheet(
         "QLabel "
@@ -77,7 +83,7 @@ karta::karta(QString nazwa, QWidget *parent)
     label_przygotowanieCON->show();
 
     QLabel *label_przygotowanie = new QLabel(this);
-    label_przygotowanie-> setGeometry(10,165,880,300);
+    label_przygotowanie-> setGeometry(10,175,880,300);
     label_przygotowanie->setText(dane[2]);
     label_przygotowanie->setStyleSheet(
         "QLabel "
@@ -103,6 +109,13 @@ void karta::close_window()
 
 }
 
+void karta::open_edycja()
+{
+    close();
+    Dialog okno("edycja", id);
+    okno.setModal(true);
+    okno.exec();
+}
 QString karta::getBaza(QString Plik) {
     QDir currentDir = QDir::current();
     // Zamień wszystkie ukośniki na odwrotne ukośniki
@@ -121,7 +134,7 @@ QString karta::getBaza(QString Plik) {
     return zmienionaSciezka;
 }
 
-void karta::wyszukaj_w_bazie(QString nazwa, QStringList *lista_nazwy){
+void karta::wyszukaj_w_bazie(int id, QStringList *lista_nazwy){
     //SQL
     QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
     QString sciezka_przepisy = getBaza("przepisy.db");
@@ -138,8 +151,8 @@ void karta::wyszukaj_w_bazie(QString nazwa, QStringList *lista_nazwy){
 
 
     QStringList nazwy_przepisow;
-    //!!!!!!! Spróbowac zamiast where nazwa robić po id wtedy mniejsze ryzyko powtórzenia
-    QString baseQuery = "SELECT nazwa, przygotowanie, opis FROM przepisy WHERE nazwa ='"+nazwa+"';";
+    // Konwersja `int` na QString i użycie w zapytaniu
+    QString baseQuery = QString("SELECT nazwa, przygotowanie, opis FROM przepisy WHERE id = %1;").arg(id);
 
     QSqlQuery query(baza_przepisy);
     if (!query.exec(baseQuery)) {

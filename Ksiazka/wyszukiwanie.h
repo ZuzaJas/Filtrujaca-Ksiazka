@@ -35,8 +35,8 @@ private:
 private slots:
     void close_window();
     QString getBaza(QString Plik);
-    void wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *adres_rodzaj);
-    void stworz_guzik(QStringList nazwa);
+    void wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *adres_rodzaj, QList<int> *id_adres);
+    void stworz_guzik(QStringList nazwa, QList<int> id);
 
 };
 

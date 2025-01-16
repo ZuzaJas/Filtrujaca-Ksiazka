@@ -9,7 +9,7 @@
 #include <QStringList>
 #include <QString>
 #include <QSqlDatabase>
-
+#include <QCheckBox>
 
 
 
@@ -22,8 +22,13 @@ class Dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog(QString rodzaj,QWidget *parent = nullptr);
+    explicit Dialog(QString rodzaj,int id, QWidget *parent = nullptr);
     ~Dialog();
+
+
+
+
+
 
 private slots:
     void close_window();
@@ -32,7 +37,12 @@ private slots:
     void zatwierdz_clicked();
     QString getBaza(QString Plik);
     QString ListaNaString(const QList<int> &lista);
-    void dodatkowe(QString skladnik);
+    void dodatkowe(QString skladnik, int a);
+
+    //funkcje kiedy edycja
+    void wczytaj_dane();
+    QStringList String_na_Lista(QString index);
+    void zmien_checkboxy(QString index, QStringList rodzaj);
 
 private:
     Ui::Dialog *ui;
@@ -48,6 +58,23 @@ private:
     QLabel *label_skladniki;
     QLabel *label_dodatkowe_skladniki;
     QTextEdit* label_lista_dodatkowe;
+
+    QString typ;
+    int id;
+
+    QMap<QString, QCheckBox*> checkBoxMap;
+
+
+    QStringList lista_rodzaj = {"śniadaniowe", "lunch", "obiadowe","napoje","desery","sosy i dodatki"};
+    QStringList lista_inne = {"wegetariańskie", "ostre"};
+    QStringList lista_bialko = {"wołowe", "ryba", "jajko", "kurczak"};
+    QStringList lista_baza = {"makaron", "ryż", "pieczywo", "mąka"};
+    QStringList lista_warzywa = {"marchew", "cebula", "ogórek", "papryka", "pomidor", "ziemniak"};
+    QStringList lista_owoce = {"banan", "cytryna", "jabłko", "malina", "pomarańcza", "truskawka"};
+    QStringList lista_nabial = {"mleko", "ser", "smietana", "jogurt"};
+    QStringList lista_przyprawy = {"cynamon","tymianek","galka_muszkatowa","kminek"};
+
+
 };
 
 extern QList<int> sql_rodzaj;

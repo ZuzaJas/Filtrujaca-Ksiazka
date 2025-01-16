@@ -10,10 +10,13 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QStringList>
-
+#include <QList>
 
 QStringList przepisy_nazwa;
 QStringList *Wprzepisy_nazwa = &przepisy_nazwa;
+
+QList<int> przepisy_id;
+QList<int> *Wprzepisy_id = &przepisy_id;
 
 wyszukiwanie::wyszukiwanie(QList<int> idx_rodzaj,QList<int> idx_inne,QList<int>idx_bialko,QList<int>idx_nabial,QList<int>idx_baza,
                            QList<int>idx_warzywa,QList<int>idx_owoce,QList<int>idx_przyprawy ,QWidget *parent)
@@ -40,10 +43,10 @@ wyszukiwanie::wyszukiwanie(QList<int> idx_rodzaj,QList<int> idx_inne,QList<int>i
     qDebug()<<"lista owoce:  "<<idx_owoce;
     qDebug()<<"lista przyprawy:  "<<idx_przyprawy;
 
-    wyszukaj_w_bazie(idx_rodzaj, Wprzepisy_nazwa);
+    wyszukaj_w_bazie(idx_rodzaj, Wprzepisy_nazwa, Wprzepisy_id);
 
     qDebug()<<"NAZWA PRZEPISÓW: "<<przepisy_nazwa;
-    stworz_guzik(przepisy_nazwa);
+    stworz_guzik(przepisy_nazwa, przepisy_id);
 
 
 }
@@ -82,7 +85,7 @@ QString wyszukiwanie::getBaza(QString Plik) {
     return zmienionaSciezka;
 }
 
-void wyszukiwanie::wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *nazwy_adres){
+void wyszukiwanie::wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *nazwy_adres, QList<int> *id_adres){
     //SQL
     QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
     QString sciezka_przepisy = getBaza("przepisy.db");
@@ -99,6 +102,7 @@ void wyszukiwanie::wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *nazwy_adr
 
     QStringList warunki;
     QStringList nazwy_przepisow;
+    QList<int> id;
     QString baseQuery = "SELECT * FROM przepisy WHERE ";
 
     for (int i = 0; i < idx_rodzaj.size(); ++i) {
@@ -120,21 +124,24 @@ void wyszukiwanie::wyszukaj_w_bazie(QList<int>idx_rodzaj, QStringList *nazwy_adr
     QSqlQuery query(baza_przepisy);
     if (query.exec(baseQuery)) {
 
-        while (query.next()) {
-            nazwy_przepisow.append(query.value(1).toString()); // Zakładamy, że nazwa opcji to kolumna 0
+        while (query.next()) {  //zmiana, columna 0 to jest ich id więc zrobić 2 listy jedną z id, drugą z nazwą
+            nazwy_przepisow.append(query.value(1).toString()); // Zakładamy, że nazwa opcji to kolumna 1
+            id.append(query.value(0).toInt());
         }
         qDebug() << "Znalezione opcje:" << nazwy_przepisow;
+        qDebug() << "ID znalezionycy" << id;
     } else {
         qDebug() << "Błąd zapytania SQL:" << query.lastError().text();
     }
 
     *nazwy_adres = nazwy_przepisow;
+    *id_adres = id;
 
     baza_przepisy.close();
 
 }
 
-void wyszukiwanie::stworz_guzik(QStringList nazwa) {
+void wyszukiwanie::stworz_guzik(QStringList nazwa, QList<int> id) {
     int liczbaElementow = nazwa.size();
     float x = 10;
     float y = 20;
@@ -150,7 +157,7 @@ void wyszukiwanie::stworz_guzik(QStringList nazwa) {
 
         // Obsługa zdarzenia
 
-        QString wartosc = nazwa[i];
+        int wartosc = id[i];
         connect(nazwa_guzik, &QPushButton::clicked, this, [this, wartosc] {
             karta dialog(wartosc ,this);
 

@@ -14,7 +14,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -25,7 +24,6 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QLabel *label;
-    QPushButton *okno_dodaj;
     QStatusBar *statusbar;
     QMenuBar *menubar;
 
@@ -51,16 +49,13 @@ public:
         label->setLineWidth(5);
         label->setTextFormat(Qt::TextFormat::RichText);
         label->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        okno_dodaj = new QPushButton(centralwidget);
-        okno_dodaj->setObjectName("okno_dodaj");
-        okno_dodaj->setGeometry(QRect(50, 600, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
         MainWindow->setStatusBar(statusbar);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1000, 25));
+        menubar->setGeometry(QRect(0, 0, 1000, 21));
         MainWindow->setMenuBar(menubar);
 
         retranslateUi(MainWindow);
@@ -72,7 +67,6 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        okno_dodaj->setText(QCoreApplication::translate("MainWindow", "DODAJ", nullptr));
     } // retranslateUi
 
 };

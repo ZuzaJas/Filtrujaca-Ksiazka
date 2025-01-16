@@ -56,8 +56,11 @@ public:
 private slots:
     void nowe_okno_clicked();
     void skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista);
-    void wyszukaj_clicked();
     void stworz_guzik(QStringList nazwa, QList<int> *index, float x, float *y);
+    void wyszukaj_clicked();
+
+    QString getBaza(QString Plik);
+    void wyszukaj_przepisy(QStringList &adres_nazwa, QList<int> &adres_id);
 
 private:
     Ui::MainWindow *ui;
@@ -73,6 +76,10 @@ private:
     QStringList lista_warzywa = {"marchew", "cebula","ogorek", "papryka", "pomidor", "ziemniak"};
     QStringList lista_owoce = { "banan","cytryna","jablko","malina","pomarancza","truskawka"};
     QStringList lista_przyprawy = {"cynamon","tymianek","galka_muszk.","kminek"};
+
+    QStringList przepisy_nazwa;
+
+    QList<int> przepisy_id;
 
 
 

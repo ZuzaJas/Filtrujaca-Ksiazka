@@ -17,8 +17,11 @@
 
 
 
+
 float y_guziki = 60;
 float *Wy_guziki = &y_guziki;
+
+
 // Funkcja do wyświetlania komunikatu w terminalu
 void MainWindow::printMessage(const QString &message)
 {
@@ -68,11 +71,17 @@ MainWindow::MainWindow(QWidget *parent)
 //------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
     QPushButton *szukaj = new QPushButton("SZUKAJ", this);
     szukaj->setGeometry(900, 720, 80, 20);
-    connect(szukaj, &QPushButton::clicked, this, &MainWindow::wyszukaj_clicked);
+    connect(szukaj, &QPushButton::clicked, this, [this]() {
+        wyszukaj_przepisy(przepisy_nazwa, przepisy_id);
+
+        qDebug()<<"NAZWA!!!"<<przepisy_nazwa;
+        qDebug()<<"id"<<przepisy_id;
+    });
     szukaj->setObjectName("Szukaj");
+
+
 
     QPushButton *dodaj = new QPushButton("DODAJ", this);
     dodaj->setGeometry(520, 720, 80, 20);
@@ -98,9 +107,10 @@ MainWindow::~MainWindow()
 void MainWindow::nowe_okno_clicked()
 {
     close();
-    Dialog okno("dodaj");
+    Dialog okno("dodaj", 0);
     okno.setModal(true);
     okno.exec();
+
 
 
 }
@@ -183,4 +193,26 @@ void MainWindow::stworz_guzik(QStringList nazwa, QList<int> *index, float x, flo
     }
 }
 
+QString MainWindow::getBaza(QString Plik) {
+    QDir currentDir = QDir::current();
+    // Zamień wszystkie ukośniki na odwrotne ukośniki
+    QString zmienionaSciezka = currentDir.absolutePath();
+    zmienionaSciezka.replace("/", "\\");
 
+    // Usuń część od "build" do końca ścieżki
+    int buildIndex = zmienionaSciezka.indexOf("\\build");
+    if (buildIndex != -1) {
+        zmienionaSciezka = zmienionaSciezka.left(buildIndex);
+    }
+
+    // Dodaj brakujące podfoldery
+    zmienionaSciezka.append("\\bazy\\");
+    zmienionaSciezka.append(Plik);
+    return zmienionaSciezka;
+}
+
+void MainWindow::wyszukaj_przepisy(QStringList &adres_nazwa, QList<int> &adres_id){
+    adres_nazwa = {"mleko", "pączki", "wieloryb"};
+    adres_id = {1, 0, 0, 1};
+
+}

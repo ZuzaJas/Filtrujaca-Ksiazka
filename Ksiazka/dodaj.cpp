@@ -1,6 +1,7 @@
 #include "dodaj.h"
 #include "ui_dodaj.h"
 #include "mainwindow.h"
+#include "karta.h"
 
 #include <QApplication>
 #include <QWidget>
@@ -42,7 +43,7 @@ QList<QString> lista_dodatkowe = {};
 
 
 
-Dialog::Dialog(QString rodzaj,QWidget *parent)
+Dialog::Dialog(QString typ,int id, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
     , nazwa(new QLineEdit(this))
@@ -56,9 +57,15 @@ Dialog::Dialog(QString rodzaj,QWidget *parent)
     , label_inne(new QLabel(this))
     , label_skladniki(new QLabel(this))
     , label_dodatkowe_skladniki(new QLabel(this))
+    , id(id), typ(typ)
 
 {
     ui->setupUi(this);
+
+    qDebug()<< "!!! ID"<<id;
+    qDebug()<<"!!! TYP"<<typ;
+
+
 
     nazwa->setPlaceholderText("Wprowadź jednowierszowy tekst...");
     label_nazwa->setText("NAZWA");
@@ -140,10 +147,10 @@ Dialog::Dialog(QString rodzaj,QWidget *parent)
     guzik_dodatkowe_dodaj->setObjectName("guzik_dodatkowe_dodaj");
     guzik_dodatkowe_usun->setObjectName("guzik_dodatkowe_usun");
     connect(guzik_dodatkowe_dodaj, &QPushButton::clicked, this, [=]() {
-        dodatkowe(dodatkowe_skladniki->text());
+        dodatkowe(dodatkowe_skladniki->text(),0);
     });
     connect(guzik_dodatkowe_usun, &QPushButton::clicked, this, [=]() {
-        dodatkowe(dodatkowe_skladniki->text());
+        dodatkowe(dodatkowe_skladniki->text(), 0);
     });
 
     przepis->setFixedSize(450,120);
@@ -171,6 +178,10 @@ Dialog::Dialog(QString rodzaj,QWidget *parent)
 
     connect(ui->zatwierdz, &QPushButton::clicked, this, &Dialog::zatwierdz_clicked);
 
+    if (typ=="edycja")
+    {
+        wczytaj_dane();
+    }
 }
 
 
@@ -182,15 +193,21 @@ Dialog::~Dialog()
 void Dialog::close_window()
 {
     close(); // Zamykamy bieżące okno dialogowe
+    if (typ=="dodaj"){
+        MainWindow *okno = new MainWindow(); // Tworzymy nowe okno główne
+        okno->show();
+    }else if (typ=="edycja"){
+        karta *okno = new karta(id);
+        okno->show();
+    }
 
-    MainWindow *okno = new MainWindow(); // Tworzymy nowe okno główne
-    okno->show(); // Pokazujemy okno główne
 }
 
 
 
 //zrobić wszystko na checkboxy
 void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, float y) {
+
     int liczbaElementow = nazwa.size();
     int elementyNaRzad = liczbaElementow <= 4 ? liczbaElementow : (liczbaElementow <= 6 ? 3 : qCeil(liczbaElementow / 2.0)); // Maksymalnie 3–6 w rzędzie
     float rzadOffset = 30;  // Odstęp między rzędami
@@ -222,7 +239,11 @@ void Dialog::stworz_checkbox(QStringList nazwa, QList<int> *index, float x, floa
                 qDebug() << "Rozmiar rodzaj przed iteracją:" << index->size();
             }
         });
+        checkBoxMap.insert(nazwa[i], checkBox);
+        qDebug()<<"n: "<<nazwa[i];
+
     }
+
 }
 
 
@@ -249,44 +270,102 @@ void Dialog::zatwierdz_clicked() {
 
     QSqlQuery query(baza_przepisy);
 
-    if (!query.prepare(R"(
-        INSERT INTO przepisy
-        (Nazwa, Rodzaj, inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis, dodatkowe, przygotowanie)
-        VALUES (:Nazwa, :Rodzaj, :inne, :bialko, :baza, :warzywa, :owoce, :nabial, :przyprawy, :opis, :dodatkowe, :przygotowanie)
-    )")) {
-        qDebug() << "Błąd przygotowania zapytania: " << query.lastError().text();
-        return;
+    if (typ=="dodaj"){
+
+        if (!query.prepare(R"(
+            INSERT INTO przepisy
+            (Nazwa, Rodzaj, inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis, dodatkowe, przygotowanie)
+            VALUES (:Nazwa, :Rodzaj, :inne, :bialko, :baza, :warzywa, :owoce, :nabial, :przyprawy, :opis, :dodatkowe, :przygotowanie)
+        )")) {
+            qDebug() << "Błąd przygotowania zapytania: " << query.lastError().text();
+            return;
+        }
+
+        query.bindValue(":Nazwa", nazwa->text());
+        query.bindValue(":Rodzaj", ListaNaString(sql_rodzaj));
+        query.bindValue(":inne", ListaNaString(sql_inne));
+        query.bindValue(":bialko", ListaNaString(sql_skl_bialko));
+        query.bindValue(":baza", ListaNaString(sql_skl_baza));
+        query.bindValue(":warzywa", ListaNaString(sql_skl_warzywa));
+        query.bindValue(":owoce", ListaNaString(sql_skl_owoce));
+        query.bindValue(":nabial", ListaNaString(sql_skl_nabial));
+        query.bindValue(":przyprawy", ListaNaString(sql_skl_przyprawy));
+        query.bindValue(":opis", opis->toPlainText());
+        query.bindValue(":dodatkowe", lista_dodatkowe.join(";"));
+        query.bindValue(":przygotowanie", przepis->toPlainText());
+
+        qDebug() << "Wykonuję zapytanie SQL...";
+        if (!query.exec()) {
+            qDebug() << "Błąd wykonania zapytania: " << query.lastError().text();
+            return;
+        }
+
+        nazwa->clear();
+        lista_dodatkowe = {};
+        label_lista_dodatkowe->clear();
+        opis->clear();
+        przepis->clear();
+
     }
 
-    query.bindValue(":Nazwa", nazwa->text());
-    query.bindValue(":Rodzaj", ListaNaString(sql_rodzaj));
-    query.bindValue(":inne", ListaNaString(sql_inne));
-    query.bindValue(":bialko", ListaNaString(sql_skl_bialko));
-    query.bindValue(":baza", ListaNaString(sql_skl_baza));
-    query.bindValue(":warzywa", ListaNaString(sql_skl_warzywa));
-    query.bindValue(":owoce", ListaNaString(sql_skl_owoce));
-    query.bindValue(":nabial", ListaNaString(sql_skl_nabial));
-    query.bindValue(":przyprawy", ListaNaString(sql_skl_przyprawy));
-    query.bindValue(":opis", opis->toPlainText());
-    query.bindValue(":dodatkowe", lista_dodatkowe.join(";"));
-    query.bindValue(":przygotowanie", przepis->toPlainText());
+    if (typ=="edycja"){
+        //tutaj miejsce na zapytanie na edycje
 
-    qDebug() << "Wykonuję zapytanie SQL...";
-    if (!query.exec()) {
-        qDebug() << "Błąd wykonania zapytania: " << query.lastError().text();
-        return;
+        // Przygotowanie zapytania SQL UPDATE
+        if (!query.prepare(R"(
+            UPDATE przepisy
+            SET
+                Nazwa = :Nazwa,
+                Rodzaj = :Rodzaj,
+                inne = :inne,
+                bialko = :bialko,
+                baza = :baza,
+                warzywa = :warzywa,
+                owoce = :owoce,
+                nabial = :nabial,
+                przyprawy = :przyprawy,
+                opis = :opis,
+                dodatkowe = :dodatkowe,
+                przygotowanie = :przygotowanie
+            WHERE id = :id
+        )")){
+            qDebug() << "Błąd przygotowania zapytania: " << query.lastError().text();
+            return;
+        }
+
+        // Przypisanie wartości do zapytania
+        query.bindValue(":Nazwa", nazwa->text());
+        query.bindValue(":Rodzaj", ListaNaString(sql_rodzaj));
+        query.bindValue(":inne", ListaNaString(sql_inne));
+        query.bindValue(":bialko", ListaNaString(sql_skl_bialko));
+        query.bindValue(":baza", ListaNaString(sql_skl_baza));
+        query.bindValue(":warzywa", ListaNaString(sql_skl_warzywa));
+        query.bindValue(":owoce", ListaNaString(sql_skl_owoce));
+        query.bindValue(":nabial", ListaNaString(sql_skl_nabial));
+        query.bindValue(":przyprawy", ListaNaString(sql_skl_przyprawy));
+        query.bindValue(":opis", opis->toPlainText());
+        query.bindValue(":dodatkowe", lista_dodatkowe.join(";"));
+        query.bindValue(":przygotowanie", przepis->toPlainText());
+        query.bindValue(":id", id); // Warunek WHERE - aktualizujemy rekord o ID = wartosc
+
+        // Wykonanie zapytania
+        if (!query.exec()) {
+            qDebug() << "Błąd wykonania zapytania: " << query.lastError().text();
+        } else {
+            qDebug() << "Rekord zaktualizowany pomyślnie!";
+        }
+
+
     }
-
-    nazwa->clear();
-    lista_dodatkowe = {};
-    label_lista_dodatkowe->clear();
-    opis->clear();
-    przepis->clear();
-
-
     qDebug() << "Dane zostały zapisane!";
     baza_przepisy.close();
     qDebug() << "Baza zamknięta!";
+    if(typ=="edycja"){
+        close(); // Zamykamy bieżące okno dialogowe
+        karta *okno = new karta(id);
+        okno->show();
+
+    }
 }
 
 
@@ -319,7 +398,7 @@ QString Dialog::getBaza(QString Plik) {
     return zmienionaSciezka;
 }
 
-void Dialog::dodatkowe(QString skladnik) {
+void Dialog::dodatkowe(QString skladnik, int type) {
     // Sprawdź, który przycisk wywołał akcję
     QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
     if (clickedButton) {
@@ -342,6 +421,8 @@ void Dialog::dodatkowe(QString skladnik) {
             }
 
         }
+    }else if(type==1){
+        lista_dodatkowe.append(skladnik);
     }
     dodatkowe_skladniki->clear();
     QString zawartoscListy = lista_dodatkowe.join(" ");
@@ -353,3 +434,131 @@ void Dialog::dodatkowe(QString skladnik) {
 
 }
 
+void Dialog::wczytaj_dane()
+{
+    //SQL
+    QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
+    QString sciezka_przepisy = getBaza("przepisy.db");
+    qDebug() << "{{ŚCIEŻKA}}  " << sciezka_przepisy;
+    baza_przepisy.setDatabaseName(sciezka_przepisy);
+    if(baza_przepisy.open()) {
+        qDebug() << "[+] POŁĄCZONO ";
+        baza_przepisy.open();
+    } else {
+        qDebug() << "[-] NIE POŁĄCZONO Z BAZĄ DANYCH";
+        qDebug() << "Błąd: " << baza_przepisy.lastError().text();
+    }
+
+    QString baseQuery = QString("SELECT * FROM przepisy WHERE id = %1;").arg(id);
+
+    QSqlQuery query(baza_przepisy);
+    if (!query.exec(baseQuery)) {
+        qDebug() << "Błąd zapytania SQL:" << query.lastError().text();
+    } else {
+        query.next();
+        //wypełnienie tekstowych rzeczy
+        nazwa->setText(query.value("nazwa").toString());
+        opis->setText(query.value("opis").toString());
+        przepis->setText(query.value("przygotowanie").toString());
+        //wypełnienie checkboxów
+        QStringList index = {"rodzaj", "inne", "bialko", "baza", "warzywa", "owoce", "nabial", "przyprawy"};
+        QStringList rodzaj = String_na_Lista(query.value("Rodzaj").toString());
+        zmien_checkboxy(index[0], rodzaj);
+        // inne, bialko, baza, warzywa, owoce, nabial, przyprawy, opis, dodatkowe, przygotowanie
+        QStringList inne = String_na_Lista(query.value("inne").toString());
+        zmien_checkboxy(index[1], inne);
+
+        QStringList bialko = String_na_Lista(query.value("bialko").toString());
+        zmien_checkboxy(index[2], bialko);
+
+        QStringList baza = String_na_Lista(query.value("baza").toString());
+        zmien_checkboxy(index[3], baza);
+
+        QStringList warzywa = String_na_Lista(query.value("warzywa").toString());
+        zmien_checkboxy(index[4], warzywa);
+
+        QStringList owoce = String_na_Lista(query.value("owoce").toString());
+        zmien_checkboxy(index[5], owoce);
+
+        QStringList nabial = String_na_Lista(query.value("nabial").toString());
+        zmien_checkboxy(index[6], nabial);
+
+        QStringList przyprawy = String_na_Lista(query.value("przyprawy").toString());
+        zmien_checkboxy(index[7], przyprawy);
+
+        QString dodatkowe_string = query.value("dodatkowe").toString();
+        QStringList dodatek = dodatkowe_string.split(";");
+
+        for (int i=0;i<dodatek.size();++i){
+            qDebug()<<"Lista dodatkowe"<<dodatek[i];
+            dodatkowe(dodatek[i], 1);
+
+        }
+    }
+
+
+    qDebug() << "Dane zostały wczytane!";
+    baza_przepisy.close();
+    qDebug() << "Baza zamknięta!";
+
+
+
+}
+
+QStringList Dialog::String_na_Lista(QString index){
+    QStringList wynik;
+
+    for (QChar c : index)
+    {
+        wynik.append(QString(c));
+
+    }
+    return wynik;
+}
+
+void Dialog::zmien_checkboxy(QString index, QStringList rodzaj)
+{
+    QStringList dane_listy;
+    QList<int> idxLista;
+    if (index=="rodzaj"){
+        dane_listy = lista_rodzaj;
+    }else if(index=="inne"){
+        dane_listy = lista_inne;
+    }else if(index=="bialko"){
+        dane_listy = lista_bialko;
+    }else if(index=="baza"){
+        dane_listy = lista_baza;
+    }else if(index=="warzywa"){
+        dane_listy = lista_warzywa;
+    }else if(index=="owoce"){
+        dane_listy = lista_owoce;
+    }else if(index=="nabial"){
+        dane_listy = lista_nabial;
+    }else if(index=="przyprawy"){
+        dane_listy = lista_przyprawy;
+    }
+
+    for (int i=0;i<rodzaj.size();++i){
+        if (rodzaj[i]=="1")
+        {
+            idxLista.append(i);
+        }
+    }
+
+    for(int i=0;i<idxLista.size();++i){
+        QString nazwa = dane_listy[idxLista[i]];
+        qDebug()<<"NAZWA!!"<<nazwa;
+        if (checkBoxMap.contains(nazwa)) {
+            QCheckBox* checkbox = checkBoxMap.value(nazwa); // Pobierz checkbox na podstawie klucza
+            if (checkbox) {
+                checkbox->toggle(); // Zmień stan checkboxa
+                qDebug() << "Zmieniono stan checkboxa:" << nazwa;
+            }
+        } else {
+            qDebug() << "Nie znaleziono checkboxa o nazwie:" << nazwa;
+        }
+
+    }
+
+    //qDebug() << "Klucze w checkBoxMap: " << checkBoxMap.keys();
+}

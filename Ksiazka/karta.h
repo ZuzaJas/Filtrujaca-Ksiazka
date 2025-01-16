@@ -13,19 +13,20 @@ class karta : public QDialog
     Q_OBJECT
 
 public:
-    explicit karta(QString nazwa,QWidget *parent = nullptr);
+    explicit karta(int id,QWidget *parent = nullptr);
     ~karta();
 
 
 private:
     Ui::karta *ui;
-    QString nazwa;
+    int id;
 
 
 private slots:
     void close_window();
+    void open_edycja();
     QString getBaza(QString Plik);
-    void wyszukaj_w_bazie(QString nazwa, QStringList *lista_nazwy);
+    void wyszukaj_w_bazie(int id, QStringList *lista_nazwy);
 
 };
 
