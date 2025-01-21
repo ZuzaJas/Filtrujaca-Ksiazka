@@ -1268,15 +1268,18 @@ C:/Users/48881/Documents/Ksiazka/Filtrujaca-Ksiazka/Ksiazka/dodaj.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtSql/qtsql-config.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlexports.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtSql/qtsqlglobal.h
+ mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QCheckBox
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QComboBox
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QDialog
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QLabel
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QLineEdit
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/QTextEdit
+ mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractbutton.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractscrollarea.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractslider.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractspinbox.h
+ mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcheckbox.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcombobox.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qdialog.h
  mdp:C:/Qt/6.8.0/mingw_64/include/QtWidgets/qframe.h

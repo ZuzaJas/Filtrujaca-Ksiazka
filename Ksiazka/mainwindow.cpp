@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "dodaj.h"
-#include "wyszukiwanie.h"
+#include "karta.h"
 
 
 #include <QPixmap>
@@ -116,17 +116,6 @@ void MainWindow::nowe_okno_clicked()
 }
 
 
-void MainWindow::wyszukaj_clicked() {
-    close(); // Zamykamy MainWindow
-
-    // Tworzymy dialog wyszukiwania i przekazujemy dane
-    wyszukiwanie dialog(idx_rodzaj,idx_inne,idx_bialko,idx_nabial,idx_baza,idx_warzywa,idx_owoce,idx_przyprawy ,this);
-
-    // Ustawiamy modalność i uruchamiamy dialog
-    dialog.setModal(true);
-    dialog.exec();
-}
-
 
 void MainWindow::skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista)
 {
@@ -211,8 +200,103 @@ QString MainWindow::getBaza(QString Plik) {
     return zmienionaSciezka;
 }
 
+//działa cała
 void MainWindow::wyszukaj_przepisy(QStringList &adres_nazwa, QList<int> &adres_id){
-    adres_nazwa = {"mleko", "pączki", "wieloryb"};
-    adres_id = {1, 0, 0, 1};
 
+    //SQL
+    QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");
+    QString sciezka_przepisy = getBaza("przepisy.db");
+    qDebug() << "{{ŚCIEŻKA}}  " << sciezka_przepisy;
+    baza_przepisy.setDatabaseName(sciezka_przepisy);
+    if(baza_przepisy.open()) {
+        qDebug() << "[+] POŁĄCZONO ";
+        baza_przepisy.open();
+    } else {
+        qDebug() << "[-] NIE POŁĄCZONO Z BAZĄ DANYCH";
+        qDebug() << "Błąd: " << baza_przepisy.lastError().text();
+    }
+
+
+    QStringList warunki;
+    QStringList nazwy_przepisow;
+    QList<int> id;
+    QString baseQuery = "SELECT * FROM przepisy WHERE ";
+
+    for (int i = 0; i < idx_rodzaj.size(); ++i) {
+        if (idx_rodzaj[i] == 1) {
+            // Dodajemy warunek dla konkretnego indeksu
+            warunki.append(QString("SUBSTR(rodzaj, %1, 1) = '1'").arg(i + 1));
+        }
+    }
+
+
+    if (!warunki.isEmpty()) {
+        baseQuery += warunki.join(" AND ");
+    } else {
+        qDebug() << "Brak warunków do wyszukiwania.";
+        return;
+    }
+
+
+    QSqlQuery query(baza_przepisy);
+    if (query.exec(baseQuery)) {
+
+        while (query.next()) {  //zmiana, columna 0 to jest ich id więc zrobić 2 listy jedną z id, drugą z nazwą
+            nazwy_przepisow.append(query.value(1).toString()); // Zakładamy, że nazwa opcji to kolumna 1
+            id.append(query.value(0).toInt());
+        }
+        qDebug() << "Znalezione opcje:" << nazwy_przepisow;
+        qDebug() << "ID znalezionycy" << id;
+    } else {
+        qDebug() << "Błąd zapytania SQL:" << query.lastError().text();
+    }
+
+    adres_nazwa = nazwy_przepisow;
+    adres_id = id;
+
+    baza_przepisy.close();
+    guziki_wyszukiwanie(adres_nazwa, adres_id);
+
+}
+//obiekt testu błędu
+void MainWindow::guziki_wyszukiwanie(QStringList nazwa, QList<int> id) {
+
+    if (!mapa_guziki.isEmpty()) {
+        for (auto it = mapa_guziki.begin(); it != mapa_guziki.end(); ++it) {
+            int klucz = it.key();
+            QPushButton *button = it.value();
+            delete button;
+
+        }
+        mapa_guziki.clear();
+    }
+
+
+    int liczbaElementow = nazwa.size();
+    float x = 10;
+    float y = 20;
+
+    for (int i = 0; i < liczbaElementow; ++i) {
+        qDebug() << "Tworzenie guzika: " << nazwa[i];
+
+        QPushButton *nazwa_guzik = new QPushButton(nazwa[i], this);
+
+        nazwa_guzik->setGeometry(x, y, 150, 20);
+        qDebug() << "Pozycja x:" << x << " Pozycja y:" << y;
+        y += 20;
+        nazwa_guzik->show();
+        // Obsługa zdarzenia
+
+        int wartosc = id[i];
+        connect(nazwa_guzik, &QPushButton::clicked, this, [this, wartosc] {
+            karta dialog(wartosc ,this);
+
+            dialog.setModal(true);
+            dialog.exec();
+
+        });
+        mapa_guziki.insert(id[i], nazwa_guzik);
+
+
+    }
 }

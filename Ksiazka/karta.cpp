@@ -1,6 +1,5 @@
 #include "karta.h"
 #include "ui_karta.h"
-#include "wyszukiwanie.h"
 #include "dodaj.h"
 
 #include <QPushButton>
@@ -9,6 +8,8 @@
 #include <QDir>
 #include <QStringList>
 #include <QLabel>
+#include <QSqlError>
+#include<QSqlQuery>
 
 QStringList dane = {};
 QStringList *Wdane = &dane;

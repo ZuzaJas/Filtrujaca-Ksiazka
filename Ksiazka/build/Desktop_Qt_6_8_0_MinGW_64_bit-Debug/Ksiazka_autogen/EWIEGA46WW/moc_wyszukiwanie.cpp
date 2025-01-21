@@ -46,8 +46,11 @@ constexpr auto qt_meta_stringdata_CLASSwyszukiwanieENDCLASS = QtMocHelpers::stri
     "idx_rodzaj",
     "QStringList*",
     "adres_rodzaj",
+    "QList<int>*",
+    "id_adres",
     "stworz_guzik",
-    "nazwa"
+    "nazwa",
+    "id"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -70,14 +73,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSwyszukiwanieENDCLASS[] = {
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
        1,    0,   38,    2, 0x08,    1 /* Private */,
        3,    1,   39,    2, 0x08,    2 /* Private */,
-       5,    2,   42,    2, 0x08,    4 /* Private */,
-      10,    1,   47,    2, 0x08,    7 /* Private */,
+       5,    3,   42,    2, 0x08,    4 /* Private */,
+      12,    2,   49,    2, 0x08,    8 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::QString, QMetaType::QString,    4,
-    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 8,    7,    9,
-    QMetaType::Void, QMetaType::QStringList,   11,
+    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 8, 0x80000000 | 10,    7,    9,   11,
+    QMetaType::Void, QMetaType::QStringList, 0x80000000 | 6,   13,   14,
 
        0        // eod
 };
@@ -100,9 +103,11 @@ Q_CONSTINIT const QMetaObject wyszukiwanie::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QList<int>, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QList<int> *, std::false_type>,
         // method 'stworz_guzik'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>
+        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QList<int>, std::false_type>
     >,
     nullptr
 } };
@@ -116,8 +121,8 @@ void wyszukiwanie::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->close_window(); break;
         case 1: { QString _r = _t->getBaza((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
-        case 2: _t->wyszukaj_w_bazie((*reinterpret_cast< std::add_pointer_t<QList<int>>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList*>>(_a[2]))); break;
-        case 3: _t->stworz_guzik((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
+        case 2: _t->wyszukaj_w_bazie((*reinterpret_cast< std::add_pointer_t<QList<int>>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<int>*>>(_a[3]))); break;
+        case 3: _t->stworz_guzik((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<int>>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -127,6 +132,13 @@ void wyszukiwanie::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<int> >(); break;
+            }
+            break;
+        case 3:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<int> >(); break;
             }
             break;

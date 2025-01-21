@@ -2,4 +2,3 @@
 #include "EWIEGA46WW/moc_dodaj.cpp"
 #include "EWIEGA46WW/moc_karta.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
-#include "EWIEGA46WW/moc_wyszukiwanie.cpp"
