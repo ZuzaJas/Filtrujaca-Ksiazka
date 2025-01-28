@@ -19,7 +19,7 @@
 #include <QSqlDatabase>
 #include <QDebug>
 
-
+//Listy odpowiedzialne za zapisywanie danych do dodania do przepisu
 QList<int> sql_rodzaj = {0, 0, 0, 0, 0,0};
 QList<int> *wsk_sql_rodzaj = &sql_rodzaj;
 
@@ -173,9 +173,6 @@ Dialog::Dialog(QString typ,int id, QWidget *parent)
     resize(1000, 800);
 
     connect(ui->powrot, &QPushButton::clicked, this, &Dialog::close_window);
-
-    //qDebug()<<"!!!app path"<<qApp->applicationDirPath();
-
     connect(ui->zatwierdz, &QPushButton::clicked, this, &Dialog::zatwierdz_clicked);
 
     if (typ=="edycja")
@@ -515,7 +512,7 @@ QStringList Dialog::String_na_Lista(QString index){
     }
     return wynik;
 }
-
+//dla edycji ->
 void Dialog::zmien_checkboxy(QString index, QStringList rodzaj)
 {
     QStringList dane_listy;

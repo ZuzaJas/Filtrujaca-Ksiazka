@@ -38,7 +38,7 @@ karta::karta(int id, QWidget *parent)
     qDebug()<<"!!!"<<dane[0];
     resize(900,900);
     QLabel *label_nazwa = new QLabel(this);
-    label_nazwa->setGeometry(10,30,880,45);
+    label_nazwa->setGeometry(10,30,880,50);
     label_nazwa->setText(dane[0]);
     label_nazwa->setStyleSheet(
         "QLabel "
@@ -61,7 +61,7 @@ karta::karta(int id, QWidget *parent)
     label_skladnikiCON->show();
 
     QLabel *label_skladniki = new QLabel(this);
-    label_skladniki-> setGeometry(10,100,880,20);
+    label_skladniki-> setGeometry(10,100,880,45);
     label_skladniki->setText(dane[1]);
     label_skladniki->setStyleSheet(
         "QLabel "
@@ -70,10 +70,11 @@ karta::karta(int id, QWidget *parent)
         "font-family: 'Dancing Script', cursive;"
         "}");
     label_skladniki->setAlignment(Qt::AlignJustify);
+    label_skladniki->setWordWrap(true);
     label_skladniki->show();
 
     QLabel *label_przygotowanieCON = new QLabel(this);
-    label_przygotowanieCON-> setGeometry(10,140,880,25);
+    label_przygotowanieCON-> setGeometry(10,165,880,25);
     label_przygotowanieCON->setText("Przygotowanie: ");
     label_przygotowanieCON->setStyleSheet(
         "QLabel "
@@ -84,7 +85,7 @@ karta::karta(int id, QWidget *parent)
     label_przygotowanieCON->show();
 
     QLabel *label_przygotowanie = new QLabel(this);
-    label_przygotowanie-> setGeometry(10,175,880,300);
+    label_przygotowanie-> setGeometry(10,190,880,300);
     label_przygotowanie->setText(dane[2]);
     label_przygotowanie->setStyleSheet(
         "QLabel "
@@ -109,7 +110,7 @@ void karta::close_window()
     close(); // Zamykamy bieżące okno dialogowe
 
 }
-
+//otwarcie okna do edytowania przepisu
 void karta::open_edycja()
 {
     close();
@@ -134,7 +135,7 @@ QString karta::getBaza(QString Plik) {
     zmienionaSciezka.append(Plik);
     return zmienionaSciezka;
 }
-
+//ma znaleźć przepis pasujący do przeniesionego z innej karty id
 void karta::wyszukaj_w_bazie(int id, QStringList *lista_nazwy){
     //SQL
     QSqlDatabase baza_przepisy = QSqlDatabase::addDatabase("QSQLITE");

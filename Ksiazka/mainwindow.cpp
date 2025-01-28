@@ -17,7 +17,7 @@
 
 
 
-
+//odstęp rozstawienia guzików
 float y_guziki = 60;
 float *Wy_guziki = &y_guziki;
 
@@ -66,11 +66,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     (*Wy_guziki) = 60;
 
-
-
 //------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+    //guzik pokazujący rezultaty filtrowania
     QPushButton *szukaj = new QPushButton("SZUKAJ", this);
     szukaj->setGeometry(900, 720, 80, 20);
     connect(szukaj, &QPushButton::clicked, this, [this]() {
@@ -82,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     szukaj->setObjectName("Szukaj");
 
 
-
+    //przechodzi do zakładki z dodaniem przepisu
     QPushButton *dodaj = new QPushButton("DODAJ", this);
     dodaj->setGeometry(520, 720, 80, 20);
     connect(dodaj, &QPushButton::clicked, this, &MainWindow::nowe_okno_clicked);
@@ -103,7 +101,7 @@ MainWindow::~MainWindow()
 }
 
 
-
+//przechodzi do zakładki z dodaniem przepisu
 void MainWindow::nowe_okno_clicked()
 {
     close();
@@ -111,12 +109,10 @@ void MainWindow::nowe_okno_clicked()
     okno.setModal(true);
     okno.exec();
 
-
-
 }
 
 
-
+//kliknięcie guzika filtrującego, daje się listy z nazwami i indexem i szuka właściwego
 void MainWindow::skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_lista)
 {
     QPushButton *button = qobject_cast<QPushButton *>(sender());
@@ -144,7 +140,7 @@ void MainWindow::skladnik_clicked(QStringList skladniki_lista, QList<int> *idx_l
     }
 }
 
-
+//tworzenie guzików z listy oraz regularne ich rozstawienie
 void MainWindow::stworz_guzik(QStringList nazwa, QList<int> *index, float x, float *y) {
     int liczbaElementow = nazwa.size();
     int elementyNaRzad = liczbaElementow <= 4 ? liczbaElementow : (liczbaElementow <= 6 ? 3 : qCeil(liczbaElementow / 2.0)); // Maksymalnie 3–6 w rzędzie
@@ -166,7 +162,7 @@ void MainWindow::stworz_guzik(QStringList nazwa, QList<int> *index, float x, flo
         qDebug()<<"float pos x"<<kolumna * kolumnaOffset;
 
 
-        button->setGeometry(xPos, yPos, 80, 20);
+        button->setGeometry(xPos, yPos, 80, 25);
         button->setObjectName(nazwa[i]);
         qDebug()<<"Guzik ["<<nazwa[i]<<"] Pozycja["<<xPos<<","<<yPos<<"]";
 
@@ -182,6 +178,7 @@ void MainWindow::stworz_guzik(QStringList nazwa, QList<int> *index, float x, flo
     }
 }
 
+//funkcja gdyby było więcej niż jedna baza danych i dostanie się do jej ścieżki
 QString MainWindow::getBaza(QString Plik) {
     QDir currentDir = QDir::current();
     // Zamień wszystkie ukośniki na odwrotne ukośniki
@@ -200,7 +197,7 @@ QString MainWindow::getBaza(QString Plik) {
     return zmienionaSciezka;
 }
 
-//działa cała
+//znajdywanie wszystkich rezultatów pasujących do filtrów poprzez rodzaj
 void MainWindow::wyszukaj_przepisy(QStringList &adres_nazwa, QList<int> &adres_id){
 
     //SQL
@@ -218,28 +215,55 @@ void MainWindow::wyszukaj_przepisy(QStringList &adres_nazwa, QList<int> &adres_i
 
 
     QStringList warunki;
+    QStringList warunki_nabial;
+    QStringList warunki_baza;
     QStringList nazwy_przepisow;
     QList<int> id;
     QString baseQuery = "SELECT * FROM przepisy WHERE ";
 
+    // Tworzymy warunki dla idx_rodzaj
     for (int i = 0; i < idx_rodzaj.size(); ++i) {
         if (idx_rodzaj[i] == 1) {
-            // Dodajemy warunek dla konkretnego indeksu
             warunki.append(QString("SUBSTR(rodzaj, %1, 1) = '1'").arg(i + 1));
         }
     }
 
+    // Tworzymy warunki dla idx_nabial
+    for (int i = 0; i < idx_nabial.size(); ++i) {
+        if (idx_nabial[i] == 1) {
+            warunki_nabial.append(QString("SUBSTR(nabial, %1, 1) = '1'").arg(i + 1));
+        }
+    }
 
-    if (!warunki.isEmpty()) {
-        baseQuery += warunki.join(" AND ");
+    // Tworzymy warunki dla idx_baza
+    for (int i = 0; i < idx_baza.size(); ++i) {
+        if (idx_baza[i] == 1) {
+            warunki_baza.append(QString("SUBSTR(baza, %1, 1) = '1'").arg(i + 1));
+        }
+    }
+
+    // Łączymy warunki w logiczną całość
+    QString queryPart1 = warunki.join(" OR ");       // Warunki dla idx_rodzaj
+    QString queryPart2 = warunki_nabial.join(" AND"); // Warunki dla idx_nabial
+    QString queryPart3 = warunki_baza.join(" AND");   // Warunki dla idx_baza
+
+    // Budowanie finalnego zapytania
+    QStringList allParts;
+    if (!queryPart1.isEmpty()) allParts.append(QString("(%1)").arg(queryPart1));
+    if (!queryPart2.isEmpty()) allParts.append(QString("(%1)").arg(queryPart2));
+    if (!queryPart3.isEmpty()) allParts.append(QString("(%1)").arg(queryPart3));
+
+    // Połącz warunki z "AND"
+    QString finalQuery;
+    if (!allParts.isEmpty()) {
+        finalQuery = baseQuery + allParts.join(" AND ");
     } else {
-        qDebug() << "Brak warunków do wyszukiwania.";
-        return;
+        finalQuery = baseQuery + "1 = 1"; // Domyślne zapytanie
     }
 
 
     QSqlQuery query(baza_przepisy);
-    if (query.exec(baseQuery)) {
+    if (query.exec(finalQuery)) {
 
         while (query.next()) {  //zmiana, columna 0 to jest ich id więc zrobić 2 listy jedną z id, drugą z nazwą
             nazwy_przepisow.append(query.value(1).toString()); // Zakładamy, że nazwa opcji to kolumna 1
@@ -281,9 +305,9 @@ void MainWindow::guziki_wyszukiwanie(QStringList nazwa, QList<int> id) {
 
         QPushButton *nazwa_guzik = new QPushButton(nazwa[i], this);
 
-        nazwa_guzik->setGeometry(x, y, 150, 20);
+        nazwa_guzik->setGeometry(x, y, 150, 30);
         qDebug() << "Pozycja x:" << x << " Pozycja y:" << y;
-        y += 20;
+        y += 35;
         nazwa_guzik->show();
         // Obsługa zdarzenia
 
